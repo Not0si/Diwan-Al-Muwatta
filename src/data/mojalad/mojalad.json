@@ -1,0 +1,761 @@
+{
+  "work": {
+    "title_arabic": "الموطأ",
+    "title_transliteration": "Al-Muwatta",
+    "author": "Imam Malik ibn Anas",
+    "recension_narrator": "Yahya ibn Yahya al-Laythi al-Andalusi",
+    "edition_reference": "Dar al-Gharb al-Islami (ed. Bashshar Awwad Ma'ruf)",
+    "total_books": 61
+  },
+  "books": [
+    {
+      "book_number": 1,
+      "title_arabic": "كتاب وقوت الصلاة",
+      "title_transliteration": "Kitab Wuqut as-Salah",
+      "title_english": "The Times of Prayer",
+      "start_page": 21,
+      "end_page": 58,
+      "hadith_count": 31,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب وقوت الصلاة", "title_transliteration": "Bab Wuqut as-Salah", "title_english": "The Times of Prayer", "page": 21 },
+        { "chapter_number": 2, "title_arabic": "باب فضل الصلاة في الجماعة", "title_transliteration": "Bab Fadl as-Salah fi al-Jama'ah", "title_english": "The Virtue of Congregational Prayer", "page": 32 },
+        { "chapter_number": 3, "title_arabic": "باب العتمة والصبح", "title_transliteration": "Bab al-'Atamah wa as-Subh", "title_english": "The Night and Dawn Prayers", "page": 41 },
+        { "chapter_number": 4, "title_arabic": "باب النوم عن الصلاة", "title_transliteration": "Bab an-Nawm 'an as-Salah", "title_english": "Sleeping Through the Prayer", "page": 49 },
+        { "chapter_number": 5, "title_arabic": "باب النهي عن الصلاة بالهاجرة", "title_transliteration": "Bab an-Nahy 'an as-Salah bi al-Hajirah", "title_english": "Prohibition of Praying at Midday", "page": 54 }
+      ]
+    },
+    {
+      "book_number": 2,
+      "title_arabic": "كتاب الطهارة",
+      "title_transliteration": "Kitab at-Taharah",
+      "title_english": "Purity",
+      "start_page": 59,
+      "end_page": 134,
+      "hadith_count": 115,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب العمل في الوضوء", "title_transliteration": "Bab al-'Amal fi al-Wudu'", "title_english": "The Practice of Ablution", "page": 59 },
+        { "chapter_number": 2, "title_arabic": "باب الوضوء من المذي", "title_transliteration": "Bab al-Wudu' min al-Madhi", "title_english": "Ablution from Prostatic Fluid", "page": 67 },
+        { "chapter_number": 3, "title_arabic": "باب المسح على الخفين", "title_transliteration": "Bab al-Mas'h 'ala al-Khuffayn", "title_english": "Wiping over Leather Socks", "page": 78 },
+        { "chapter_number": 4, "title_arabic": "باب الغسل من الجنابة", "title_transliteration": "Bab al-Ghusl min al-Janabah", "title_english": "Bathing after Major Ritual Impurity", "page": 91 },
+        { "chapter_number": 5, "title_arabic": "باب التيمم", "title_transliteration": "Bab at-Tayammum", "title_english": "Dry Ablution (Tayammum)", "page": 112 },
+        { "chapter_number": 6, "title_arabic": "باب طهارة أبدان النساء وحيضهن", "title_transliteration": "Bab Taharat Abdan an-Nisa' wa Haydihinna", "title_english": "Ritual Purity and Menstruation of Women", "page": 125 }
+      ]
+    },
+    {
+      "book_number": 3,
+      "title_arabic": "كتاب الصلاة",
+      "title_transliteration": "Kitab as-Salah",
+      "title_english": "Prayer",
+      "start_page": 135,
+      "end_page": 198,
+      "hadith_count": 100,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب النداء للصلاة", "title_transliteration": "Bab an-Nida' li as-Salah", "title_english": "The Call to Prayer (Adhan)", "page": 135 },
+        { "chapter_number": 2, "title_arabic": "باب افتتاح الصلاة", "title_transliteration": "Bab Iftitah as-Salah", "title_english": "Beginning the Prayer", "page": 146 },
+        { "chapter_number": 3, "title_arabic": "باب القراءة في الصلاة", "title_transliteration": "Bab al-Qira'ah fi as-Salah", "title_english": "Recitation in Prayer", "page": 160 },
+        { "chapter_number": 4, "title_arabic": "باب الركوع والسجود", "title_transliteration": "Bab ar-Ruku' wa as-Sujud", "title_english": "Bowing and Prostration", "page": 178 },
+        { "chapter_number": 5, "title_arabic": "باب التشهد", "title_transliteration": "Bab at-Tashahhud", "title_english": "The Tashahhud", "page": 190 }
+      ]
+    },
+    {
+      "book_number": 4,
+      "title_arabic": "كتاب السهو",
+      "title_transliteration": "Kitab as-Sahw",
+      "title_english": "Forgetfulness in Prayer",
+      "start_page": 199,
+      "end_page": 208,
+      "hadith_count": 10,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب ما يفعل من سها في صلاته", "title_transliteration": "Bab Ma Yaf'alu Man Saha fi Salatihi", "title_english": "What to Do When Forgetting in Prayer", "page": 199 },
+        { "chapter_number": 2, "title_arabic": "باب السجود بعد السلام", "title_transliteration": "Bab as-Sujud Ba'd as-Salam", "title_english": "Prostration After the Salutation", "page": 204 }
+      ]
+    },
+    {
+      "book_number": 5,
+      "title_arabic": "كتاب الجمعة",
+      "title_transliteration": "Kitab al-Jumu'ah",
+      "title_english": "Friday Prayer",
+      "start_page": 209,
+      "end_page": 228,
+      "hadith_count": 22,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب غسل يوم الجمعة", "title_transliteration": "Bab Ghusl Yawm al-Jumu'ah", "title_english": "Bathing on Friday", "page": 209 },
+        { "chapter_number": 2, "title_arabic": "باب الإنصات يوم الجمعة والإمام يخطب", "title_transliteration": "Bab al-Insat Yawm al-Jumu'ah wa al-Imam Yakhtub", "title_english": "Listening Attentively During the Friday Khutbah", "page": 218 }
+      ]
+    },
+    {
+      "book_number": 6,
+      "title_arabic": "كتاب الصلاة في رمضان",
+      "title_transliteration": "Kitab as-Salah fi Ramadan",
+      "title_english": "Prayer in Ramadan",
+      "start_page": 229,
+      "end_page": 235,
+      "hadith_count": 8,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب الترغيب في الصلاة في رمضان", "title_transliteration": "Bab at-Targhib fi as-Salah fi Ramadan", "title_english": "Encouragement to Pray in Ramadan", "page": 229 },
+        { "chapter_number": 2, "title_arabic": "باب قيام شهر رمضان", "title_transliteration": "Bab Qiyam Shahr Ramadan", "title_english": "Standing for Prayer in Ramadan", "page": 231 }
+      ]
+    },
+    {
+      "book_number": 7,
+      "title_arabic": "كتاب صلاة الليل",
+      "title_transliteration": "Kitab Salah al-Layl",
+      "title_english": "Tahajjud (Night Prayer)",
+      "start_page": 236,
+      "end_page": 258,
+      "hadith_count": 33,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب الأمر بالوتر", "title_transliteration": "Bab al-Amr bi al-Witr", "title_english": "Command to Pray Witr", "page": 236 },
+        { "chapter_number": 2, "title_arabic": "باب صلاة النبي في الليل", "title_transliteration": "Bab Salah an-Nabi fi al-Layl", "title_english": "The Prophet's Prayer at Night", "page": 242 }
+      ]
+    },
+    {
+      "book_number": 8,
+      "title_arabic": "كتاب صلاة الجماعة",
+      "title_transliteration": "Kitab Salah al-Jama'ah",
+      "title_english": "Prayer in Congregation",
+      "start_page": 259,
+      "end_page": 280,
+      "hadith_count": 39,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب إعادة الصلاة مع الإمام", "title_transliteration": "Bab I'adat as-Salah ma'a al-Imam", "title_english": "Repeating Prayer with the Imam", "page": 259 }
+      ]
+    },
+    {
+      "book_number": 9,
+      "title_arabic": "كتاب قصر الصلاة في السفر",
+      "title_transliteration": "Kitab Qasr as-Salah fi as-Safar",
+      "title_english": "Shortening Prayer on a Journey",
+      "start_page": 281,
+      "end_page": 320,
+      "hadith_count": 96,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب قصر الصلاة في السفر", "title_transliteration": "Bab Qasr as-Salah fi as-Safar", "title_english": "Shortening Prayers While Traveling", "page": 281 }
+      ]
+    },
+    {
+      "book_number": 10,
+      "title_arabic": "كتاب العيدين",
+      "title_transliteration": "Kitab al-'Eidayn",
+      "title_english": "The Two 'Eids",
+      "start_page": 321,
+      "end_page": 332,
+      "hadith_count": 14,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب العمل في صلاة العيدين", "title_transliteration": "Bab al-'Amal fi Salah al-'Eidayn", "title_english": "The Procedure for 'Eid Prayers", "page": 321 }
+      ]
+    },
+    {
+      "book_number": 11,
+      "title_arabic": "كتاب الخوف",
+      "title_transliteration": "Kitab al-Khawf",
+      "title_english": "The Fear Prayer",
+      "start_page": 333,
+      "end_page": 338,
+      "hadith_count": 4,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب صلاة الخوف", "title_transliteration": "Bab Salah al-Khawf", "title_english": "Prayer in Times of Danger", "page": 333 }
+      ]
+    },
+    {
+      "book_number": 12,
+      "title_arabic": "كتاب الكسوف",
+      "title_transliteration": "Kitab al-Kusuf",
+      "title_english": "The Eclipse Prayer",
+      "start_page": 339,
+      "end_page": 344,
+      "hadith_count": 4,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب العمل في صلاة الكسوف", "title_transliteration": "Bab al-'Amal fi Salah al-Kusuf", "title_english": "Procedure for the Eclipse Prayer", "page": 339 }
+      ]
+    },
+    {
+      "book_number": 13,
+      "title_arabic": "كتاب الاستسقاء",
+      "title_transliteration": "Kitab al-Istisqa'",
+      "title_english": "Asking for Rain",
+      "start_page": 345,
+      "end_page": 352,
+      "hadith_count": 8,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب الاستسقاء", "title_transliteration": "Bab al-Istisqa'", "title_english": "Praying for Rain", "page": 345 }
+      ]
+    },
+    {
+      "book_number": 14,
+      "title_arabic": "كتاب القبلة",
+      "title_transliteration": "Kitab al-Qiblah",
+      "title_english": "The Qiblah",
+      "start_page": 353,
+      "end_page": 362,
+      "hadith_count": 15,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب استقبال القبلة", "title_transliteration": "Bab Istiqbal al-Qiblah", "title_english": "Facing the Qiblah", "page": 353 }
+      ]
+    },
+    {
+      "book_number": 15,
+      "title_arabic": "كتاب القرآن",
+      "title_transliteration": "Kitab al-Qur'an",
+      "title_english": "The Qur'an",
+      "start_page": 363,
+      "end_page": 395,
+      "hadith_count": 51,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب الأمر بالوضوء لمن مس القرآن", "title_transliteration": "Bab al-Amr bi al-Wudu' li Man Masta al-Qur'an", "title_english": "Wudu Required to Touch the Qur'an", "page": 363 }
+      ]
+    },
+    {
+      "book_number": 16,
+      "title_arabic": "كتاب الجنائز",
+      "title_transliteration": "Kitab al-Jana'iz",
+      "title_english": "Funerals",
+      "start_page": 396,
+      "end_page": 440,
+      "hadith_count": 59,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب غسل الميت", "title_transliteration": "Bab Ghusl al-Mayyit", "title_english": "Washing the Deceased", "page": 396 }
+      ]
+    },
+    {
+      "book_number": 17,
+      "title_arabic": "كتاب الزكاة",
+      "title_transliteration": "Kitab az-Zakah",
+      "title_english": "Zakat (Alms)",
+      "start_page": 441,
+      "end_page": 485,
+      "hadith_count": 58,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب ما تجب فيه الزكاة", "title_transliteration": "Bab Ma Tajibu Fihi az-Zakah", "title_english": "Assets Subject to Zakat", "page": 441 }
+      ]
+    },
+    {
+      "book_number": 18,
+      "title_arabic": "كتاب الصيام",
+      "title_transliteration": "Kitab as-Siyam",
+      "title_english": "Fasting",
+      "start_page": 486,
+      "end_page": 535,
+      "hadith_count": 60,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب رؤية الهلال لرؤيته صوموا", "title_transliteration": "Bab Ru'yat al-Hilal", "title_english": "Sighting the Crescent Moon", "page": 486 }
+      ]
+    },
+    {
+      "book_number": 19,
+      "title_arabic": "كتاب الاعتكاف",
+      "title_transliteration": "Kitab al-I'tikaf",
+      "title_english": "I'tikaf (Seclusion)",
+      "start_page": 536,
+      "end_page": 548,
+      "hadith_count": 16,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب ذكر الاعتكاف", "title_transliteration": "Bab Dhikr al-I'tikaf", "title_english": "Rulings of I'tikaf", "page": 536 }
+      ]
+    },
+    {
+      "book_number": 20,
+      "title_arabic": "كتاب الحج",
+      "title_transliteration": "Kitab al-Hajj",
+      "title_english": "Hajj (Pilgrimage)",
+      "start_page": 549,
+      "end_page": 710,
+      "hadith_count": 255,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب المواقيت", "title_transliteration": "Bab al-Mawaqit", "title_english": "Designated Stations for Ihram", "page": 549 }
+      ]
+    },
+    {
+      "book_number": 21,
+      "title_arabic": "كتاب الجهاد",
+      "title_transliteration": "Kitab al-Jihad",
+      "title_english": "Jihad",
+      "start_page": 711,
+      "end_page": 745,
+      "hadith_count": 50,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب الترغيب في الجهاد", "title_transliteration": "Bab at-Targhib fi al-Jihad", "title_english": "Encouragement for Jihad", "page": 711 }
+      ]
+    },
+    {
+      "book_number": 22,
+      "title_arabic": "كتاب النذور والأيمان",
+      "title_transliteration": "Kitab an-Nudhur wa al-Ayman",
+      "title_english": "Vows and Oaths",
+      "start_page": 746,
+      "end_page": 765,
+      "hadith_count": 22,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب الأيمان بالنذور", "title_transliteration": "Bab al-Ayman bi an-Nudhur", "title_english": "Fulfilling Oaths and Vows", "page": 746 }
+      ]
+    },
+    {
+      "book_number": 23,
+      "title_arabic": "كتاب الضحايا",
+      "title_transliteration": "Kitab ad-Dahaya",
+      "title_english": "Sacrificial Animals",
+      "start_page": 766,
+      "end_page": 778,
+      "hadith_count": 14,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب النهي عن أكل الضحايا بعد ثلاث", "title_transliteration": "Bab an-Nahy 'an Akl ad-Dahaya", "title_english": "Rulings on Sacrificial Meat", "page": 766 }
+      ]
+    },
+    {
+      "book_number": 24,
+      "title_arabic": "كتاب الذبائح",
+      "title_transliteration": "Kitab ad-Dhaba'ih",
+      "title_english": "Slaughtering Animals",
+      "start_page": 779,
+      "end_page": 788,
+      "hadith_count": 13,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب ما يجوز من الذبائح", "title_transliteration": "Bab Ma Yajuzu min ad-Dhaba'ih", "title_english": "Permissible Animals for Slaughter", "page": 779 }
+      ]
+    },
+    {
+      "book_number": 25,
+      "title_arabic": "كتاب الصيد",
+      "title_transliteration": "Kitab as-Sayd",
+      "title_english": "Hunting",
+      "start_page": 789,
+      "end_page": 802,
+      "hadith_count": 18,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب أكل صيد البحر", "title_transliteration": "Bab Akl Sayd al-Bahr", "title_english": "Eating Sea Game", "page": 789 }
+      ]
+    },
+    {
+      "book_number": 26,
+      "title_arabic": "كتاب العقيقة",
+      "title_transliteration": "Kitab al-'Aqiqah",
+      "title_english": "Aqiqah",
+      "start_page": 803,
+      "end_page": 808,
+      "hadith_count": 7,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب ما جاء في العقيقة", "title_transliteration": "Bab Ma Ja'a fi al-'Aqiqah", "title_english": "Narrations Regarding Aqiqah", "page": 803 }
+      ]
+    },
+    {
+      "book_number": 27,
+      "title_arabic": "كتاب الفرائض",
+      "title_transliteration": "Kitab al-Fara'id",
+      "title_english": "Inheritance",
+      "start_page": 809,
+      "end_page": 825,
+      "hadith_count": 17,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب ميراث الجد والجدة", "title_transliteration": "Bab Mirath al-Jadd wa al-Jaddah", "title_english": "Inheritance of Grandparents", "page": 809 }
+      ]
+    },
+    {
+      "book_number": 28,
+      "title_arabic": "كتاب النكاح",
+      "title_transliteration": "Kitab an-Nikah",
+      "title_english": "Marriage",
+      "start_page": 826,
+      "end_page": 875,
+      "hadith_count": 60,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب الترغيب في النكاح", "title_transliteration": "Bab at-Targhib fi an-Nikah", "title_english": "Encouragement to Marry", "page": 826 }
+      ]
+    },
+    {
+      "book_number": 29,
+      "title_arabic": "كتاب الطلاق",
+      "title_transliteration": "Kitab at-Talaq",
+      "title_english": "Divorce",
+      "start_page": 876,
+      "end_page": 940,
+      "hadith_count": 105,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب ما جاء في الطلاق", "title_transliteration": "Bab Ma Ja'a fi at-Talaq", "title_english": "General Rulings on Divorce", "page": 876 }
+      ]
+    },
+    {
+      "book_number": 30,
+      "title_arabic": "كتاب الرضاع",
+      "title_transliteration": "Kitab ar-Rada'",
+      "title_english": "Breastfeeding",
+      "start_page": 941,
+      "end_page": 955,
+      "hadith_count": 18,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب رضاعة الصغير", "title_transliteration": "Bab Rada'at as-Saghir", "title_english": "Breastfeeding an Infant", "page": 941 }
+      ]
+    },
+    {
+      "book_number": 31,
+      "title_arabic": "كتاب البيوع",
+      "title_transliteration": "Kitab al-Buyu'",
+      "title_english": "Business Transactions",
+      "start_page": 956,
+      "end_page": 1025,
+      "hadith_count": 108,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب النهي عن بيعين في بيعة", "title_transliteration": "Bab an-Nahy 'an Bay'atayn fi Bay'ah", "title_english": "Prohibition of Two Sales in One", "page": 956 }
+      ]
+    },
+    {
+      "book_number": 32,
+      "title_arabic": "كتاب القراض",
+      "title_transliteration": "Kitab al-Qirad",
+      "title_english": "Partnership (Qirad)",
+      "start_page": 1026,
+      "end_page": 1042,
+      "hadith_count": 22,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب ما يجوز في القراض", "title_transliteration": "Bab Ma Yajuzu fi al-Qirad", "title_english": "Permissible Capital Investments", "page": 1026 }
+      ]
+    },
+    {
+      "book_number": 33,
+      "title_arabic": "كتاب المساقاة",
+      "title_transliteration": "Kitab al-Musaqah",
+      "title_english": "Sharecropping",
+      "start_page": 1043,
+      "end_page": 1048,
+      "hadith_count": 3,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب المساقاة", "title_transliteration": "Bab al-Musaqah", "title_english": "Irrigation Agreements", "page": 1043 }
+      ]
+    },
+    {
+      "book_number": 34,
+      "title_arabic": "كتاب إكراء الأرضين",
+      "title_transliteration": "Kitab Ikra' al-Aradin",
+      "title_english": "Renting Land",
+      "start_page": 1049,
+      "end_page": 1054,
+      "hadith_count": 4,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب كراء الأرض", "title_transliteration": "Bab Kira' al-Ard", "title_english": "Renting Agricultural Land", "page": 1049 }
+      ]
+    },
+    {
+      "book_number": 35,
+      "title_arabic": "كتاب الشفعة",
+      "title_transliteration": "Kitab ash-Shuf'ah",
+      "title_english": "Pre-emption",
+      "start_page": 1055,
+      "end_page": 1062,
+      "hadith_count": 6,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب الشفعة فيما لم يقسم", "title_transliteration": "Bab ash-Shuf'ah fi Ma Lam Yuqsam", "title_english": "Pre-emption in Undivided Property", "page": 1055 }
+      ]
+    },
+    {
+      "book_number": 36,
+      "title_arabic": "كتاب الأقضية",
+      "title_transliteration": "Kitab al-Aqdiyah",
+      "title_english": "Judgments",
+      "start_page": 1063,
+      "end_page": 1110,
+      "hadith_count": 57,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب القضاء باليمين مع الشاهد", "title_transliteration": "Bab al-Qada' bi al-Yamin ma'a ash-Shahid", "title_english": "Judgments Based on an Oath and Witness", "page": 1063 }
+      ]
+    },
+    {
+      "book_number": 37,
+      "title_arabic": "كتاب الوصية",
+      "title_transliteration": "Kitab al-Wasiyyah",
+      "title_english": "Wills and Testaments",
+      "start_page": 1111,
+      "end_page": 1125,
+      "hadith_count": 12,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب الأمر بالوصية", "title_transliteration": "Bab al-Amr bi al-Wasiyyah", "title_english": "Command to Write a Will", "page": 1111 }
+      ]
+    },
+    {
+      "book_number": 38,
+      "title_arabic": "كتاب العتق والولاء",
+      "title_transliteration": "Kitab al-'Itq wa al-Wala'",
+      "title_english": "Manumission and Clientage",
+      "start_page": 1126,
+      "end_page": 1150,
+      "hadith_count": 30,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب عتق أم الولد", "title_transliteration": "Bab 'Itq Umm al-Walad", "title_english": "Freeing the Mother of a Child", "page": 1126 }
+      ]
+    },
+    {
+      "book_number": 39,
+      "title_arabic": "كتاب المكاتب",
+      "title_transliteration": "Kitab al-Mukatab",
+      "title_english": "Contractual Freedom",
+      "start_page": 1151,
+      "end_page": 1168,
+      "hadith_count": 18,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب مكاتبة العبد", "title_transliteration": "Bab Mukatabat al-'Abd", "title_english": "Contractual Manumission", "page": 1151 }
+      ]
+    },
+    {
+      "book_number": 40,
+      "title_arabic": "كتاب المدبر",
+      "title_transliteration": "Kitab al-Mudabbar",
+      "title_english": "Post-Mortem Freedom",
+      "start_page": 1169,
+      "end_page": 1175,
+      "hadith_count": 7,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب قضاء المدبر", "title_transliteration": "Bab Qada' al-Mudabbar", "title_english": "Rulings on the Mudabbar", "page": 1169 }
+      ]
+    },
+    {
+      "book_number": 41,
+      "title_arabic": "كتاب الحدود",
+      "title_transliteration": "Kitab al-Hudud",
+      "title_english": "Legal Penalties",
+      "start_page": 1176,
+      "end_page": 1205,
+      "hadith_count": 34,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب حد الزنا", "title_transliteration": "Bab Hadd az-Zina", "title_english": "Penalty for Adultery", "page": 1176 }
+      ]
+    },
+    {
+      "book_number": 42,
+      "title_arabic": "كتاب العقول",
+      "title_transliteration": "Kitab al-'Uqul",
+      "title_english": "Blood Money (Diyah)",
+      "start_page": 1206,
+      "end_page": 1235,
+      "hadith_count": 32,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب الدية في القتل", "title_transliteration": "Bab ad-Diyah fi al-Qatl", "title_english": "Blood Money in Homicide", "page": 1206 }
+      ]
+    },
+    {
+      "book_number": 43,
+      "title_arabic": "كتاب القسامة",
+      "title_transliteration": "Kitab al-Qasamah",
+      "title_english": "Oaths in Homicide",
+      "start_page": 1236,
+      "end_page": 1240,
+      "hadith_count": 3,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب القسامة", "title_transliteration": "Bab al-Qasamah", "title_english": "The Procedure of Qasamah", "page": 1236 }
+      ]
+    },
+    {
+      "book_number": 44,
+      "title_arabic": "كتاب الجامع",
+      "title_transliteration": "Kitab al-Jami'",
+      "title_english": "General Matters",
+      "start_page": 1241,
+      "end_page": 1260,
+      "hadith_count": 21,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب ما جاء في أكل الثوم", "title_transliteration": "Bab Ma Ja'a fi Akl ath-Thawm", "title_english": "General Social Etiquettes", "page": 1241 }
+      ]
+    },
+    {
+      "book_number": 45,
+      "title_arabic": "كتاب القدر",
+      "title_transliteration": "Kitab al-Qadar",
+      "title_english": "Divine Decree",
+      "start_page": 1261,
+      "end_page": 1272,
+      "hadith_count": 12,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب النهي عن القول بالقدر", "title_transliteration": "Bab an-Nahy 'an al-Qawl bi al-Qadar", "title_english": "Belief in Divine Predestination", "page": 1261 }
+      ]
+    },
+    {
+      "book_number": 46,
+      "title_arabic": "كتاب حسن الخلق",
+      "title_transliteration": "Kitab Husn al-Khuluq",
+      "title_english": "Good Character",
+      "start_page": 1273,
+      "end_page": 1288,
+      "hadith_count": 18,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب ما جاء في حسن الخلق", "title_transliteration": "Bab Ma Ja'a fi Husn al-Khuluq", "title_english": "Virtues of Good Manners", "page": 1273 }
+      ]
+    },
+    {
+      "book_number": 47,
+      "title_arabic": "كتاب اللباس",
+      "title_transliteration": "Kitab al-Libas",
+      "title_english": "Dress",
+      "start_page": 1289,
+      "end_page": 1305,
+      "hadith_count": 20,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب لبس الثياب الجياد", "title_transliteration": "Bab Libs ath-Thiyab al-Jiyad", "title_english": "Etiquette of Clothing", "page": 1289 }
+      ]
+    },
+    {
+      "book_number": 48,
+      "title_arabic": "كتاب صفة النبي صلى الله عليه وسلم",
+      "title_transliteration": "Kitab Sifat an-Nabi",
+      "title_english": "Description of the Prophet",
+      "start_page": 1306,
+      "end_page": 1330,
+      "hadith_count": 30,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب صفة النبي صلى الله عليه وسلم", "title_transliteration": "Bab Sifat an-Nabi", "title_english": "Physical and Moral Attributes", "page": 1306 }
+      ]
+    },
+    {
+      "book_number": 49,
+      "title_arabic": "كتاب العين",
+      "title_transliteration": "Kitab al-'Ayn",
+      "title_english": "The Evil Eye",
+      "start_page": 1331,
+      "end_page": 1345,
+      "hadith_count": 20,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب الوضوء من العين", "title_transliteration": "Bab al-Wudu' min al-'Ayn", "title_english": "Remedies for the Evil Eye", "page": 1331 }
+      ]
+    },
+    {
+      "book_number": 50,
+      "title_arabic": "كتاب الشعر",
+      "title_transliteration": "Kitab ash-Sha'r",
+      "title_english": "Hair and Grooming",
+      "start_page": 1346,
+      "end_page": 1358,
+      "hadith_count": 18,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب إصلاح الشعر", "title_transliteration": "Bab Islah ash-Sha'r", "title_english": "Grooming and Hair Care", "page": 1346 }
+      ]
+    },
+    {
+      "book_number": 51,
+      "title_arabic": "كتاب الرؤيا",
+      "title_transliteration": "Kitab ar-Ru'ya",
+      "title_english": "Visions and Dreams",
+      "start_page": 1359,
+      "end_page": 1368,
+      "hadith_count": 13,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب ما جاء في الرؤيا", "title_transliteration": "Bab Ma Ja'a fi ar-Ru'ya", "title_english": "Truthful Dreams", "page": 1359 }
+      ]
+    },
+    {
+      "book_number": 52,
+      "title_arabic": "كتاب السلام",
+      "title_transliteration": "Kitab as-Salam",
+      "title_english": "Greetings",
+      "start_page": 1369,
+      "end_page": 1375,
+      "hadith_count": 8,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب التسليم", "title_transliteration": "Bab at-Taslim", "title_english": "Manner of Greeting", "page": 1369 }
+      ]
+    },
+    {
+      "book_number": 53,
+      "title_arabic": "كتاب الاستئذان",
+      "title_transliteration": "Kitab al-Isti'dhan",
+      "title_english": "Asking Permission",
+      "start_page": 1376,
+      "end_page": 1400,
+      "hadith_count": 39,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب الاستئذان", "title_transliteration": "Bab al-Isti'dhan", "title_english": "Rules for Entering Homes", "page": 1376 }
+      ]
+    },
+    {
+      "book_number": 54,
+      "title_arabic": "كتاب البيعة",
+      "title_transliteration": "Kitab al-Bay'ah",
+      "title_english": "Pledge of Allegiance",
+      "start_page": 1401,
+      "end_page": 1405,
+      "hadith_count": 3,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب المبايعة", "title_transliteration": "Bab al-Mubay'ah", "title_english": "Pledging Allegiance to the Leader", "page": 1401 }
+      ]
+    },
+    {
+      "book_number": 55,
+      "title_arabic": "كتاب الكلام",
+      "title_transliteration": "Kitab al-Kalam",
+      "title_english": "Speech",
+      "start_page": 1406,
+      "end_page": 1422,
+      "hadith_count": 27,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب حفظ اللسان", "title_transliteration": "Bab Hifz al-Lisan", "title_english": "Guarding the Tongue", "page": 1406 }
+      ]
+    },
+    {
+      "book_number": 56,
+      "title_arabic": "كتاب جهنم",
+      "title_transliteration": "Kitab Jahannam",
+      "title_english": "Hell",
+      "start_page": 1423,
+      "end_page": 1426,
+      "hadith_count": 3,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب صفة جهنم", "title_transliteration": "Bab Sifat Jahannam", "title_english": "Description of Hellfire", "page": 1423 }
+      ]
+    },
+    {
+      "book_number": 57,
+      "title_arabic": "كتاب الصدقة",
+      "title_transliteration": "Kitab as-Sadaqah",
+      "title_english": "Voluntary Charity",
+      "start_page": 1427,
+      "end_page": 1438,
+      "hadith_count": 16,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب الترغيب في الصدقة", "title_transliteration": "Bab at-Targhib fi as-Sadaqah", "title_english": "Virtues of Giving Charity", "page": 1427 }
+      ]
+    },
+    {
+      "book_number": 58,
+      "title_arabic": "كتاب العلم",
+      "title_transliteration": "Kitab al-'Ilm",
+      "title_english": "Knowledge",
+      "start_page": 1439,
+      "end_page": 1445,
+      "hadith_count": 8,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب طلب العلم", "title_transliteration": "Bab Talab al-'Ilm", "title_english": "Seeking Knowledge", "page": 1439 }
+      ]
+    },
+    {
+      "book_number": 59,
+      "title_arabic": "كتاب دعوة المظلوم",
+      "title_transliteration": "Kitab Da'wat al-Mazlum",
+      "title_english": "Supplication of the Oppressed",
+      "start_page": 1446,
+      "end_page": 1447,
+      "hadith_count": 1,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب اتقاء دعوة المظلوم", "title_transliteration": "Bab Ittiqa' Da'wat al-Mazlum", "title_english": "Beware the Supplication of the Oppressed", "page": 1446 }
+      ]
+    },
+    {
+      "book_number": 60,
+      "title_arabic": "كتاب أسماء النبي صلى الله عليه وسلم",
+      "title_transliteration": "Kitab Asma' an-Nabi",
+      "title_english": "Names of the Prophet",
+      "start_page": 1448,
+      "end_page": 1450,
+      "hadith_count": 2,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب أسماء النبي", "title_transliteration": "Bab Asma' an-Nabi", "title_english": "The Names of the Prophet Muhammad", "page": 1448 }
+      ]
+    },
+    {
+      "book_number": 61,
+      "title_arabic": "كتاب المدينة",
+      "title_transliteration": "Kitab al-Madinah",
+      "title_english": "Medina",
+      "start_page": 1451,
+      "end_page": 1470,
+      "hadith_count": 24,
+      "chapters": [
+        { "chapter_number": 1, "title_arabic": "باب فضل المدينة", "title_transliteration": "Bab Fadl al-Madinah", "title_english": "The Excellence of Medina", "page": 1451 }
+      ]
+    }
+  ]
+}

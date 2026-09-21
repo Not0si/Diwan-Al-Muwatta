@@ -1,0 +1,142 @@
+---
+import { getCollection } from "astro:content";
+import { formatDuration } from "../utils/playlist";
+import type { IEpisode } from "../data/playlist/playlist";
+
+// Fetch collection items
+const allPlaylistEntries = await getCollection("playlist");
+
+// Extract typed data array
+const episodes: IEpisode[] = allPlaylistEntries.map((item) => item.data);
+---
+
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>فهرس دروس كرسي الإمام مالك</title>
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <h1>فهرس دروس كرسي الإمام مالك</h1>
+        <p>الشيخ سعيد الكملي</p>
+      </header>
+
+      {
+        episodes.map((data) => (
+          <section class="book-section">
+            <h2 class="book-title">📚 {data.episode_number}</h2>
+          </section>
+        ))
+      }
+    </main>
+  </body>
+</html>
+
+<style>
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    font-family:
+      system-ui,
+      -apple-system,
+      sans-serif;
+  }
+
+  header {
+    margin-bottom: 2.5rem;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 1rem;
+  }
+
+  .book-section {
+    margin-bottom: 3rem;
+    background: #f8fafc;
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+
+  .book-title {
+    font-size: 1.5rem;
+    color: #1e293b;
+    margin-top: 0;
+  }
+
+  .chapter-block {
+    margin-top: 1.5rem;
+  }
+
+  .chapter-title {
+    font-size: 1.2rem;
+    color: #334155;
+    margin-bottom: 1rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .card {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+
+  .thumb {
+    position: relative;
+    aspect-ratio: 16 / 9;
+  }
+
+  .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .time {
+    position: absolute;
+    bottom: 6px;
+    left: 6px;
+    background: rgba(15, 23, 42, 0.85);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  .info {
+    padding: 0.85rem;
+  }
+
+  .ep-tag {
+    font-size: 0.8rem;
+    color: #64748b;
+    font-weight: 500;
+    display: block;
+  }
+
+  h4 {
+    margin: 0.35rem 0 0;
+    font-size: 0.95rem;
+    color: #0f172a;
+    line-height: 1.4;
+  }
+</style>
