@@ -1,6 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 import { parseMarkdownTable } from "../data/episodes/_schema";
+import type { IEpisode } from "../data/playlist/playlist";
+import { formatEpisodeToNumber, timeToSeconds } from "../utils/oo";
 
 const allEpisodes = await getCollection("episodes");
 
@@ -11,6 +13,13 @@ const parsedFiles = allEpisodes.map((entry) => {
     tables: parseMarkdownTable(entry.body),
   };
 });
+
+//
+const allPlaylistEntries = await getCollection("playlist");
+
+const episodes: Record<number, IEpisode> = Object.fromEntries(
+  allPlaylistEntries.map((item) => [item.data.episode_number, item.data]),
+);
 ---
 
 <meta charset="UTF-8" />
@@ -34,19 +43,32 @@ const parsedFiles = allEpisodes.map((entry) => {
                   const formattedMin = tableItem.minute.padStart(2, "0");
                   const formattedSec = tableItem.second.padStart(2, "0");
 
+                  const epNumber = formatEpisodeToNumber(tableItem.episode);
+                  const episoded = episodes[epNumber] as IEpisode;
+                  const url = episoded.url;
+
+                  const cursor = timeToSeconds(formattedMin, formattedSec);
+
                   return (
                     <li class="detail-item">
-                      <div class="meta-tags">
-                        {tableItem.episode && (
-                          <span class="badge episode-badge">
-                            Ep {tableItem.episode}
+                      <a
+                        href={`${episoded.url}&t=${cursor}s`}
+                        style="cursor: pointer;width:100%"
+                        target="_blank"
+                      >
+                        <div class="meta-tags">
+                          {tableItem.episode && (
+                            <span class="badge episode-badge">
+                              Ep {tableItem.episode}
+                            </span>
+                          )}
+                          <span class="badge time-badge">
+                            {formattedMin}:{formattedSec}
                           </span>
-                        )}
-                        <span class="badge time-badge">
-                          {formattedMin}:{formattedSec}
-                        </span>
-                      </div>
-                      <p class="detail-text">{tableItem.detail}</p>
+                        </div>
+
+                        <p class="detail-text">{tableItem.detail}</p>
+                      </a>
                     </li>
                   );
                 })}

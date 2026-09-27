@@ -3,10 +3,8 @@ import { getCollection } from "astro:content";
 import { formatDuration } from "../utils/playlist";
 import type { IEpisode } from "../data/playlist/playlist";
 
-// Fetch collection items
 const allPlaylistEntries = await getCollection("playlist");
 
-// Extract typed data array
 const episodes: IEpisode[] = allPlaylistEntries.map((item) => item.data);
 ---
 
