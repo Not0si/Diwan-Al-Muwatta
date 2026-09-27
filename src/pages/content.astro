@@ -2,7 +2,11 @@
 import { getCollection } from "astro:content";
 import { parseMarkdownTable } from "../data/episodes/_schema";
 import type { IEpisode } from "../data/playlist/playlist";
-import { formatEpisodeToNumber, timeToSeconds } from "../utils/oo";
+import {
+  addQueryParams,
+  formatEpisodeToNumber,
+  timeToSeconds,
+} from "../utils/globals";
 
 const allEpisodes = await getCollection("episodes");
 
@@ -52,7 +56,9 @@ const episodes: Record<number, IEpisode> = Object.fromEntries(
                   return (
                     <li class="detail-item">
                       <a
-                        href={`${episoded.url}&t=${cursor}s`}
+                        href={addQueryParams(episoded.url, {
+                          t: cursor,
+                        })}
                         style="cursor: pointer;width:100%"
                         target="_blank"
                       >

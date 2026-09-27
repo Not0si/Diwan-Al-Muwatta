@@ -1,4 +1,4 @@
-import { z } from "astro/zod";
+import { z } from "astro/zod"
 
 export const ChapterSchema = z.object({
   chapter_number: z.number(),
@@ -6,7 +6,7 @@ export const ChapterSchema = z.object({
   title_transliteration: z.string(),
   title_english: z.string(),
   page: z.number(),
-});
+})
 
 export const MuwattaBookSchema = z.object({
   book_number: z.number(),
@@ -17,7 +17,7 @@ export const MuwattaBookSchema = z.object({
   end_page: z.number(),
   hadith_count: z.number(),
   chapters: z.array(ChapterSchema),
-});
+})
 
 export const MuwattaIndexSchema = z.object({
   work: z.object({
@@ -29,8 +29,8 @@ export const MuwattaIndexSchema = z.object({
     total_books: z.number(),
   }),
   books: z.array(MuwattaBookSchema),
-});
+})
 
-export type Chapter = z.infer<typeof ChapterSchema>;
-export type MuwattaBook = z.infer<typeof MuwattaBookSchema>;
-export type MuwattaIndex = z.infer<typeof MuwattaIndexSchema>;
+export type Chapter = z.infer<typeof ChapterSchema>
+export type MuwattaBook = z.infer<typeof MuwattaBookSchema>
+export type MuwattaIndex = z.infer<typeof MuwattaIndexSchema>
