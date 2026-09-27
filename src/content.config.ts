@@ -1,7 +1,8 @@
  
 import { defineCollection } from 'astro:content';
-import { file } from 'astro/loaders'; 
+import { file, glob } from 'astro/loaders'; 
 import {   EpisodeSchema  } from './data/playlist/playlist';
+import { EpisodeDetailsSchema } from './data/episodes/_schema';
 
  
 const playlist = defineCollection({
@@ -9,4 +10,10 @@ const playlist = defineCollection({
   schema: EpisodeSchema,
 });
 
-export const collections = { playlist };
+const episodes = defineCollection({ 
+  // Use glob loader for directories of markdown files
+  loader: glob({ pattern: "**/*.md", base: "./src/data/episodes" }),
+  schema: EpisodeDetailsSchema,
+});
+
+export const collections = { playlist, episodes };

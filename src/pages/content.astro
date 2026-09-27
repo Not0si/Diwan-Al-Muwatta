@@ -1,0 +1,19 @@
+---
+import { getCollection } from "astro:content";
+import { parseMarkdownTable } from "../data/episodes/_schema";
+
+// Fetch all entries from the 'episodes' collection
+const allEpisodes = await getCollection("episodes");
+
+// Parse Markdown tables across all collection entries
+const parsedFiles = allEpisodes.map((entry) => ({
+  id: entry.id,
+  data: entry.data,
+  tables: parseMarkdownTable(entry.body),
+}));
+---
+
+<main>
+  <h2>Parsed Episodes Data</h2>
+  <pre>{JSON.stringify(parsedFiles, null, 2)}</pre>
+</main>
