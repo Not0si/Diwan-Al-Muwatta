@@ -1,45 +1,41 @@
-# Astro Starter Kit: Minimal
+# 📚 مشروع فهرسة وتكشيف كرسي الإمام مالك (شرح الموطأ)
 
-```sh
-npm create astro@latest -- --template minimal
-```
+> **تحويل أكثر من 300 ساعة من الدروس المرئية إلى أرشيف رقمي ذكي، منظم، وقابل للبحث المباشر.**
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+---
 
-## 🚀 Project Structure
+## 🎯 ملخص المشروع (TL;DR)
 
-Inside of your Astro project, you'll see the following folders and files:
+يهدف المشروع إلى بناء نظام فهرسة وتكشيف زمني (Timestamped Indexing) لسلسلة «شرح موطأ الإمام مالك» للشيخ د. سعيد الكملي المتاحة عبر [قائمة تشغيل YouTube](https://www.youtube.com/playlist?list=PL1N7o8_a8ugtYN75lUB6ExYHiKXVbHxAV).
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+يقوم النظام بتحويل المحتوى المسموع والمرئي إلى **قاعدة بيانات تفاعلية** تتيح للباحثين وطلاب العلم الوصول المباشر إلى الحديث، الباب الفقهي، أو المسألة العلمية بضغطة زر واحدة.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+---
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## 🚨 المشكلة (Problem Statement)
 
-Any static assets, like images, can be placed in the `public/` directory.
+تضم قائمة التشغيل مئات المحاضرات الطويلة التي تتناول شروحًا حديثية وفقهية معقدة. ويعاني الطالب أو الباحث من:
 
-## 🧞 Commands
+1. **صعوبة الوصول:** استغراق وقت طويل في التصفح اليدوي للوصول لحديث أو مسألة فقهية بعينها.
+2. **غياب التكشيف الدقيق:** عناوين الفيديوهات على يوتيوب عامة ولا تعكس جميع المسائل والتراجم المطروحة داخل الحلقة.
+3. **تشتت المحتوى:** عدم وجود ربط هيكلي بين المحتوى المرئي والتقسيم الاصطلاحي المعتمد في كتاب «الموطأ» (كتب -> أبواب -> أحاديث).
 
-All commands are run from the root of the project, from a terminal:
+---
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## 💡 الحل والقيمة المضافة (The Solution)
 
-## 👀 Want to learn more?
+بناء محرك فهرسة يُحلل مقاطع السلسلة واستخراج البيانات منها لتوليد **شجرة تبويب زمني دقيقة**، تشمل:
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- **الفهرسة الهيكلية:** ربط الحلقات بالتقسيم الأصلي لكتاب الموطأ (الكتاب / الباب / رقم الحديث).
+- **الطوابع الزمنية الدقيقة (Deep-Link Timestamps):** التوجيه المباشر لدقيقة وبداية شرح المسألة داخل الفيديو (`https://youtu.be/...s?t=X`).
+- **البحث النصي المتقدم:** إمكانية الاستعلام عن الكلمات المفتاحية، اسم الراوي، أو الفرع الفقهي مع إظهار النتائج مقترنة بروابط التشغيل المباشر.
 
-# Diwan-Al-Muwatta
+---
+
+## 📌 القيمة للمستخدم النهائي
+
+| قبل المشروع ❌                               | بعد المشروع ✅                                         |
+| :------------------------------------------- | :----------------------------------------------------- |
+| مشاهدة مقطع مدته 60 دقيقة للبحث عن فرع فقهي. | البحث عن الفرع الفقهي والانتقال للدقيقة المحددة فورًا. |
+| التخمين بناءً على عنوان الفيديو العام.       | معاينة جميع محاور الحلقة والأحاديث المشروحة قبل الفتح. |
+| تصفح غير منظم على يوتيوب.                    | دليل شجري منظم حسب كتب وأبواب الموطأ.                  |
