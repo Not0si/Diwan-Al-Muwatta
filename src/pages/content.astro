@@ -1,87 +1,71 @@
 ---
-import { getCollection } from "astro:content";
-import { parseMarkdownTable } from "../data/episodes/_schema";
-import type { IEpisode } from "../data/playlist/playlist";
+import { getEpisodesData } from "../data"
+import type { IEpisode } from "../data/playlist/playlist"
 import {
   addQueryParams,
   formatEpisodeToNumber,
   timeToSeconds,
-} from "../utils/globals";
+} from "../utils/globals"
 
-const allEpisodes = await getCollection("episodes");
-
-const parsedFiles = allEpisodes.map((entry) => {
-  return {
-    id: entry.id,
-    data: entry.data,
-    tables: parseMarkdownTable(entry.body),
-  };
-});
-
-//
-const allPlaylistEntries = await getCollection("playlist");
-
-const episodes: Record<number, IEpisode> = Object.fromEntries(
-  allPlaylistEntries.map((item) => [item.data.episode_number, item.data]),
-);
+const { parsedFiles, episodes } = await getEpisodesData()
 ---
 
-<meta charset="UTF-8" />
-<main class="episodes-container">
-  <h2 class="title">Parsed Episodes Data</h2>
+<meta charset='UTF-8' />
+<main class='episodes-container'>
+  <h2 class='title'>Parsed Episodes Data</h2>
 
-  <div class="files-list">
+  <div class='files-list'>
     {
       parsedFiles.map((fileItem) => {
-        const title = fileItem.data.title || `File ID: ${fileItem.id}`;
+        const title = fileItem.data.title || `File ID: ${fileItem.id}`
 
         return (
-          <section class="file-card">
-            <h3 class="file-title">{title}</h3>
+          <section class='file-card'>
+            <h3 class='file-title'>{title}</h3>
 
             {fileItem.tables.length === 0 ? (
-              <p class="empty-state">No records available for this file.</p>
+              <p class='empty-state'>No records available for this file.</p>
             ) : (
-              <ul class="details-list">
+              <ul class='details-list'>
                 {fileItem.tables.map((tableItem) => {
-                  const formattedMin = tableItem.minute.padStart(2, "0");
-                  const formattedSec = tableItem.second.padStart(2, "0");
+                  const formattedMin = tableItem.minute.padStart(2, "0")
+                  const formattedSec = tableItem.second.padStart(2, "0")
 
-                  const epNumber = formatEpisodeToNumber(tableItem.episode);
-                  const episoded = episodes[epNumber] as IEpisode;
-                  const url = episoded.url;
+                  const epNumber = formatEpisodeToNumber(tableItem.episode)
+                  const episoded = episodes[epNumber] as IEpisode
+                  const url = episoded.url
 
-                  const cursor = timeToSeconds(formattedMin, formattedSec);
+                  const cursor = timeToSeconds(formattedMin, formattedSec)
 
                   return (
-                    <li class="detail-item">
+                    <li class='detail-item'>
                       <a
                         href={addQueryParams(episoded.url, {
                           t: cursor,
                         })}
-                        style="cursor: pointer;width:100%"
-                        target="_blank"
+                        style='cursor: pointer;width:100%'
+                        target='_blank'
                       >
-                        <div class="meta-tags">
+                        <div class='meta-tags'>
                           {tableItem.episode && (
-                            <span class="badge episode-badge">
+                            <span class='badge episode-badge'>
                               Ep {tableItem.episode}
                             </span>
                           )}
-                          <span class="badge time-badge">
+                          <span class='badge time-badge'>
                             {formattedMin}:{formattedSec}
                           </span>
                         </div>
 
-                        <p class="detail-text">{tableItem.detail}</p>
+                        <p class='detail-text'>{tableItem.detail}</p>
                       </a>
                     </li>
-                  );
+                  )
                 })}
               </ul>
             )}
           </section>
-        );
+        )
       })
     }
   </div>

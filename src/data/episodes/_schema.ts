@@ -20,7 +20,7 @@ export function parseMarkdownTable(markdownContent: string = ""): TableRow[] {
     .filter((line) => line.startsWith("|"))
     .slice(2)
     .map((line) => line.split("|").map((cell) => cell.trim()))
-    .filter((cells) => cells.length >= 5)
+    .filter((cells) => cells.length >= 5 || !cells[3].length)
     .map((cells) => ({
       minute: cells[1],
       second: cells[2],
