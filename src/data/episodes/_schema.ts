@@ -1,4 +1,4 @@
-import { z } from "astro/zod";
+import { z } from "astro/zod"; 
 
 export const EpisodeDetailsSchema = z.object({
   title: z.string().optional(),
@@ -16,9 +16,10 @@ export interface TableRow {
  
  
 export function parseMarkdownTable(
-  markdownContent: string = ""
-): TableRow[] {
-  return markdownContent
+  markdownContent: string = "" 
+): TableRow[] { 
+
+  const result = markdownContent
     .split(/\r?\n/)
     .map(line => line.trim())
     .filter(line => line.startsWith("|"))
@@ -38,4 +39,7 @@ export function parseMarkdownTable(
         row.detail ||
         row.episode
     );
+     
+
+  return result
 }

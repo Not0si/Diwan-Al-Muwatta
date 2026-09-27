@@ -2,18 +2,160 @@
 import { getCollection } from "astro:content";
 import { parseMarkdownTable } from "../data/episodes/_schema";
 
-// Fetch all entries from the 'episodes' collection
 const allEpisodes = await getCollection("episodes");
 
-// Parse Markdown tables across all collection entries
-const parsedFiles = allEpisodes.map((entry) => ({
-  id: entry.id,
-  data: entry.data,
-  tables: parseMarkdownTable(entry.body),
-}));
+const parsedFiles = allEpisodes.map((entry) => {
+  return {
+    id: entry.id,
+    data: entry.data,
+    tables: parseMarkdownTable(entry.body),
+  };
+});
 ---
 
-<main>
-  <h2>Parsed Episodes Data</h2>
-  <pre>{JSON.stringify(parsedFiles, null, 2)}</pre>
+<meta charset="UTF-8" />
+<main class="episodes-container">
+  <h2 class="title">Parsed Episodes Data</h2>
+
+  <div class="files-list">
+    {
+      parsedFiles.map((fileItem) => {
+        const title = fileItem.data.title || `File ID: ${fileItem.id}`;
+
+        return (
+          <section class="file-card">
+            <h3 class="file-title">{title}</h3>
+
+            {fileItem.tables.length === 0 ? (
+              <p class="empty-state">No records available for this file.</p>
+            ) : (
+              <ul class="details-list">
+                {fileItem.tables.map((tableItem) => {
+                  const formattedMin = tableItem.minute.padStart(2, "0");
+                  const formattedSec = tableItem.second.padStart(2, "0");
+
+                  return (
+                    <li class="detail-item">
+                      <div class="meta-tags">
+                        {tableItem.episode && (
+                          <span class="badge episode-badge">
+                            Ep {tableItem.episode}
+                          </span>
+                        )}
+                        <span class="badge time-badge">
+                          {formattedMin}:{formattedSec}
+                        </span>
+                      </div>
+                      <p class="detail-text">{tableItem.detail}</p>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </section>
+        );
+      })
+    }
+  </div>
 </main>
+
+<style>
+  .episodes-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    font-family:
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      sans-serif;
+    color: #1f2937;
+  }
+
+  .title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #111827;
+  }
+
+  .files-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .file-card {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1.25rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+
+  .file-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+    color: #374151;
+    border-bottom: 2px solid #f3f4f6;
+    padding-bottom: 0.5rem;
+  }
+
+  .details-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .detail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.6rem;
+    border-radius: 6px;
+    background-color: #f9fafb;
+  }
+
+  .meta-tags {
+    display: flex;
+    gap: 0.35rem;
+    flex-shrink: 0;
+  }
+
+  .badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-family: monospace;
+  }
+
+  .episode-badge {
+    background-color: #e0e7ff;
+    color: #3730a3;
+  }
+
+  .time-badge {
+    background-color: #e5e7eb;
+    color: #374151;
+  }
+
+  .detail-text {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: #4b5563;
+  }
+
+  .empty-state {
+    color: #9ca3af;
+    font-style: italic;
+    margin: 0;
+  }
+</style>

@@ -27,6 +27,9 @@ const episodes: IEpisode[] = allPlaylistEntries.map((item) => item.data);
         episodes.map((data) => (
           <section class="book-section">
             <h2 class="book-title">📚 {data.episode_number}</h2>
+            <a href={data.url} target="_blank">
+              Go
+            </a>
           </section>
         ))
       }

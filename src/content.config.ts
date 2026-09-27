@@ -1,8 +1,7 @@
- 
 import { defineCollection } from 'astro:content';
-import { file, glob } from 'astro/loaders'; 
+import { file, glob,   } from 'astro/loaders'; 
 import {   EpisodeSchema  } from './data/playlist/playlist';
-import { EpisodeDetailsSchema } from './data/episodes/_schema';
+import {   EpisodeDetailsSchema } from './data/episodes/_schema';
 
  
 const playlist = defineCollection({
