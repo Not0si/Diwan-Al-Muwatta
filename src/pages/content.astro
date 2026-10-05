@@ -1,173 +1,129 @@
 ---
 import { getEpisodesData } from "../data"
 import type { IEpisode } from "../data/playlist/playlist"
+import "../globals.css"
 import {
   addQueryParams,
   formatEpisodeToNumber,
   timeToSeconds,
 } from "../utils/globals"
 
-const { parsedFiles, episodes } = await getEpisodesData()
+const { episodes, timeline } = await getEpisodesData()
 ---
 
 <meta charset='UTF-8' />
 <main class='episodes-container'>
   <h2 class='title'>Parsed Episodes Data</h2>
 
-  <div class='files-list'>
-    {
-      parsedFiles.map((fileItem) => {
-        const title = fileItem.data.title || `File ID: ${fileItem.id}`
+  <div class='mx-auto max-w-3xl space-y-4 p-4'>
+    {timeline.map((item) => {
+      const formattedTime = `${item.minute.padStart(2, "0")}:${item.second.padStart(2, "0")}`
 
-        return (
-          <section class='file-card'>
-            <h3 class='file-title'>{title}</h3>
+      const epNumber = formatEpisodeToNumber(item.episode)
+      const episoded = episodes[epNumber] as IEpisode
+      const url = episoded.url
 
-            {fileItem.tables.length === 0 ? (
-              <p class='empty-state'>No records available for this file.</p>
-            ) : (
-              <ul class='details-list'>
-                {fileItem.tables.map((tableItem) => {
-                  const formattedMin = tableItem.minute.padStart(2, "0")
-                  const formattedSec = tableItem.second.padStart(2, "0")
+      const cursor = timeToSeconds(item.minute, item.second)
 
-                  const epNumber = formatEpisodeToNumber(tableItem.episode)
-                  const episoded = episodes[epNumber] as IEpisode
-                  const url = episoded.url
+      return (
+        <div class='group relative overflow-hidden rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-all hover:border-slate-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900'>
+          {/* Header: Prefix Badge & Time Info */}
+          <div class='flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3 dark:border-slate-800'>
+            <div class='flex items-center gap-2'>
+              {item.episode && (
+                <span class='text-xs text-slate-500 dark:text-slate-400'>
+                  Episode:{" "}
+                  <strong class='font-medium text-slate-700 dark:text-slate-300'>
+                    {item.episode}
+                  </strong>
+                </span>
+              )}
 
-                  const cursor = timeToSeconds(formattedMin, formattedSec)
-
-                  return (
-                    <li class='detail-item'>
-                      <a
-                        href={addQueryParams(episoded.url, {
-                          t: cursor,
-                        })}
-                        style='cursor: pointer;width:100%'
-                        target='_blank'
-                      >
-                        <div class='meta-tags'>
-                          {tableItem.episode && (
-                            <span class='badge episode-badge'>
-                              Ep {tableItem.episode}
-                            </span>
-                          )}
-                          <span class='badge time-badge'>
-                            {formattedMin}:{formattedSec}
-                          </span>
-                        </div>
-
-                        <p class='detail-text'>{tableItem.detail}</p>
-                      </a>
-                    </li>
-                  )
+              <a
+                href={addQueryParams(episoded.url, {
+                  t: cursor,
                 })}
-              </ul>
+                style='cursor: pointer;width:100%'
+                target='_blank'
+              >
+                Go
+              </a>
+            </div>
+
+            <div class='flex items-center gap-3 text-xs font-mono text-slate-500 dark:text-slate-400'>
+              <span class='inline-flex items-center gap-1 rounded bg-slate-100 px-2 py-0.5 font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-300'>
+                <svg
+                  class='h-3.5 w-3.5'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  stroke='currentColor'
+                >
+                  <path
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    stroke-width='2'
+                    d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 9 0 0118 0z'
+                  />
+                </svg>
+                {formattedTime}
+              </span>
+
+              {item.duration !== null && <span>({item.duration}s)</span>}
+            </div>
+          </div>
+
+          {/* Body: Title & Context */}
+          <div class='mt-3 space-y-2'>
+            <h3 class='text-lg font-semibold text-slate-900 dark:text-white'>
+              {item.detail}
+            </h3>
+
+            {(item.book || item.chapter) && (
+              <div class='flex flex-wrap items-center gap-2 text-xs text-slate-600 dark:text-slate-400'>
+                {item.book && (
+                  <span class='inline-flex items-center gap-1 rounded-md bg-amber-50 px-2 py-1 font-medium text-amber-700 dark:bg-amber-950/40 dark:text-amber-400'>
+                    <svg
+                      class='h-3.5 w-3.5'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      stroke='currentColor'
+                    >
+                      <path
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                        stroke-width='2'
+                        d='M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'
+                      />
+                    </svg>
+                    {item.book}
+                  </span>
+                )}
+
+                {item.book && item.chapter && <span>•</span>}
+
+                {item.chapter && (
+                  <span class='inline-flex items-center gap-1 rounded-md bg-emerald-50 px-2 py-1 font-medium text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400'>
+                    <svg
+                      class='h-3.5 w-3.5'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      stroke='currentColor'
+                    >
+                      <path
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                        stroke-width='2'
+                        d='M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z'
+                      />
+                    </svg>
+                    {item.chapter}
+                  </span>
+                )}
+              </div>
             )}
-          </section>
-        )
-      })
-    }
+          </div>
+        </div>
+      )
+    })}
   </div>
 </main>
-
-<style>
-  .episodes-container {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-    font-family:
-      system-ui,
-      -apple-system,
-      BlinkMacSystemFont,
-      "Segoe UI",
-      Roboto,
-      sans-serif;
-    color: #1f2937;
-  }
-
-  .title {
-    font-size: 1.75rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    color: #111827;
-  }
-
-  .files-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .file-card {
-    background-color: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    padding: 1.25rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  }
-
-  .file-title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin: 0 0 1rem 0;
-    color: #374151;
-    border-bottom: 2px solid #f3f4f6;
-    padding-bottom: 0.5rem;
-  }
-
-  .details-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .detail-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-    padding: 0.6rem;
-    border-radius: 6px;
-    background-color: #f9fafb;
-  }
-
-  .meta-tags {
-    display: flex;
-    gap: 0.35rem;
-    flex-shrink: 0;
-  }
-
-  .badge {
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-    font-family: monospace;
-  }
-
-  .episode-badge {
-    background-color: #e0e7ff;
-    color: #3730a3;
-  }
-
-  .time-badge {
-    background-color: #e5e7eb;
-    color: #374151;
-  }
-
-  .detail-text {
-    margin: 0;
-    font-size: 0.95rem;
-    line-height: 1.4;
-    color: #4b5563;
-  }
-
-  .empty-state {
-    color: #9ca3af;
-    font-style: italic;
-    margin: 0;
-  }
-</style>

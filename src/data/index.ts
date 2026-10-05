@@ -1,12 +1,6 @@
-// src/utils/getEpisodesData.ts
 import { getCollection } from "astro:content"
-import { parseMarkdownTable } from "../data/episodes/_schema"
+import { parseMarkdownTable, processTimeline } from "../data/episodes/_schema"
 import type { IEpisode } from "../data/playlist/playlist"
-import {
-  addQueryParams,
-  formatEpisodeToNumber,
-  timeToSeconds,
-} from "../utils/globals"
 
 export async function getEpisodesData() {
   const allEpisodes = await getCollection("episodes")
@@ -17,11 +11,13 @@ export async function getEpisodesData() {
     tables: parseMarkdownTable(entry.body),
   }))
 
+  const timeline = processTimeline(parsedFiles.flatMap((e) => e.tables))
+
   const allPlaylistEntries = await getCollection("playlist")
 
   const episodes: Record<number, IEpisode> = Object.fromEntries(
     allPlaylistEntries.map((item) => [item.data.episode_number, item.data])
   )
 
-  return { parsedFiles, episodes }
+  return { episodes, timeline }
 }
