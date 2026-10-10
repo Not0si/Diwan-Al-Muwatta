@@ -9,7 +9,8 @@ import {
 type ChapterAcc = {
   chapter_number: number
   title: string
-  start_episode: number | null
+  start_episode: number
+  start_second: number
   end_episode: number | null
   hadith_count: number
 }
@@ -17,7 +18,8 @@ type ChapterAcc = {
 type BookAcc = {
   book_number: number
   title: string
-  start_episode: number | null
+  start_episode: number
+  start_second: number
   end_episode: number | null
   hadith_count: number
   chapters: Map<string, ChapterAcc>
@@ -48,6 +50,7 @@ function buildDiwanBooks(timeline: ITimelineItem[]): IDiwanBook[] {
         hadith_count: 0,
         chapters: new Map(),
         chapterOrder: [],
+        start_second: item.totalSeconds,
       }
       books.set(item.book, book)
       bookOrder.push(item.book)
@@ -71,6 +74,7 @@ function buildDiwanBooks(timeline: ITimelineItem[]): IDiwanBook[] {
         start_episode: item.episode,
         end_episode: item.episode,
         hadith_count: 0,
+        start_second: item.totalSeconds,
       }
       book.chapters.set(item.chapter, chapter)
       book.chapterOrder.push(item.chapter)
@@ -90,6 +94,7 @@ function buildDiwanBooks(timeline: ITimelineItem[]): IDiwanBook[] {
         chapter_number: c.chapter_number,
         title: c.title,
         start_episode: c.start_episode,
+        start_second: c.start_second,
         end_episode: c.end_episode,
         hadith_count: c.hadith_count,
       }
@@ -99,6 +104,7 @@ function buildDiwanBooks(timeline: ITimelineItem[]): IDiwanBook[] {
       book_number: b.book_number,
       title: b.title,
       start_episode: b.start_episode,
+      start_second: b.start_second,
       end_episode: b.end_episode,
       hadith_count: b.hadith_count,
       chapters,

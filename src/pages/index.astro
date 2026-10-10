@@ -1,4 +1,5 @@
 ---
+import BaseLayout from "../components/base-layout.astro"
 import { getDiwanBooks } from "../generators/diwan-books"
 import { getTimeline } from "../generators/timeline"
 
@@ -8,460 +9,601 @@ const books = await getDiwanBooks(timeline)
 const totalBooks = books.length
 const totalChapters = books.reduce((sum, b) => sum + b.chapters.length, 0)
 const totalHadiths = books.reduce((sum, b) => sum + b.hadith_count, 0)
+const totalEpisodes = new Set(timeline.map((t) => t.episode)).size
+
+const num = (n: number | null | undefined) =>
+  n == null ? "" : n.toLocaleString("en-US", { useGrouping: false })
+
+// Preview a handful of books on the home page
+const featuredBooks = books.slice(0, 4)
 ---
 
-<html lang='ar' dir='rtl'>
-  <head>
-    <meta charset='utf-8' />
-    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-    <title>فهرس دروس كرسي الإمام مالك</title>
-    <meta
-      name='description'
-      content='فهرس الكتب والأبواب في سلسلة دروس كرسي الإمام مالك'
-    />
-    <link rel='preconnect' href='https://fonts.googleapis.com' />
-    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
-    <link
-      href='https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Amiri:wght@700&display=swap'
-      rel='stylesheet'
-    />
-    <style>
-      :root {
-        --bg: #faf7f2;
-        --bg-card: #ffffff;
-        --ink: #1c1a17;
-        --ink-soft: #5b554c;
-        --accent: #8a6d3b;
-        --accent-soft: #c9a961;
-        --border: #e8e0d3;
-        --shadow:
-          0 1px 2px rgba(28, 26, 23, 0.04),
-          0 8px 24px -12px rgba(28, 26, 23, 0.12);
+<BaseLayout title='كرسي الإمام مالك — الصفحة الرئيسية'>
+  <style>
+    /* ---------- Hero ---------- */
+    .hero {
+      position: relative;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem 3rem;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: -20% -10% auto -10%;
+      height: 60%;
+      background: radial-gradient(
+        ellipse at top,
+        rgba(201, 169, 97, 0.18),
+        transparent 60%
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-kicker {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      background: var(--accent-tint);
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 {
+      font-family: "Amiri", serif;
+      font-size: clamp(2rem, 5.5vw, 3.25rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      margin: 0 0 1.25rem;
+      color: var(--ink);
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero p {
+      max-width: 40rem;
+      margin: 0 auto 2rem;
+      font-size: 1.05rem;
+      color: var(--ink-soft);
+      line-height: 1.9;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+
+    .btn {
+      font: inherit;
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 0.8rem 1.5rem;
+      border-radius: var(--radius-sm);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition:
+        transform 0.15s ease,
+        background 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease,
+        box-shadow 0.15s ease;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--accent-soft);
+      outline-offset: 2px;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 8px 20px -10px rgba(138, 109, 59, 0.7);
+    }
+
+    .btn-primary:hover {
+      background: #755c32;
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: var(--bg-card);
+      border-color: var(--border);
+      color: var(--ink);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent-soft);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    /* ---------- Stats strip ---------- */
+    .stats {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .stat {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem 1rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .stat .value {
+      font-family: "Amiri", serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      display: block;
+      margin-bottom: 0.4rem;
+      direction: ltr;
+      unicode-bidi: isolate;
+    }
+
+    .stat .label {
+      font-size: 0.85rem;
+      color: var(--ink-soft);
+      font-weight: 600;
+    }
+
+    /* ---------- Section ---------- */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .section + .section {
+      margin-top: 4rem;
+    }
+
+    .section-head {
+      margin-bottom: 1.75rem;
+    }
+
+    .section-head h2 {
+      font-family: "Amiri", serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      margin: 0 0 0.4rem;
+      color: var(--ink);
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--ink-soft);
+      max-width: 42rem;
+    }
+
+    /* ---------- Feature cards ---------- */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+
+    .feature {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent-soft);
+      box-shadow:
+        0 2px 4px rgba(28, 26, 23, 0.04),
+        0 24px 48px -24px rgba(28, 26, 23, 0.22);
+    }
+
+    .feature-icon {
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 10px;
+      background: var(--accent-tint);
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .feature h3 {
+      font-family: "Amiri", serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin: 0;
+      color: var(--ink);
+    }
+
+    .feature p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      flex: 1;
+    }
+
+    .feature-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-top: 0.25rem;
+    }
+
+    .feature-link svg {
+      transition: transform 0.2s ease;
+    }
+
+    .feature:hover .feature-link svg {
+      transform: translateX(-4px);
+    }
+
+    /* ---------- Books preview ---------- */
+    .books-preview {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .book-preview {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.15rem;
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      transition:
+        border-color 0.15s ease,
+        background 0.15s ease;
+    }
+
+    .book-preview:hover {
+      border-color: var(--accent-soft);
+      background: var(--accent-tint);
+    }
+
+    .book-preview-num {
+      flex-shrink: 0;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 50%;
+      background: var(--accent-tint);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      direction: ltr;
+      unicode-bidi: isolate;
+    }
+
+    .book-preview-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .book-preview-title {
+      font-family: "Amiri", serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 0 0 0.15rem;
+      color: var(--ink);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .book-preview-meta {
+      font-size: 0.78rem;
+      color: var(--ink-soft);
+    }
+
+    .books-preview-more {
+      grid-column: 1 / -1;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 780px) {
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
       }
 
-      * {
-        box-sizing: border-box;
+      .features {
+        grid-template-columns: 1fr;
       }
 
-      html,
-      body {
-        margin: 0;
-        padding: 0;
+      .books-preview {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero {
+        padding: 3rem 1rem 2rem;
       }
 
-      body {
-        font-family:
-          "Cairo",
-          system-ui,
-          -apple-system,
-          "Segoe UI",
-          sans-serif;
-        background: var(--bg);
-        color: var(--ink);
-        line-height: 1.7;
-        -webkit-font-smoothing: antialiased;
-      }
-
-      .page {
-        max-width: 960px;
-        margin: 0 auto;
-        padding: 3rem 1.5rem 6rem;
-      }
-
-      /* ---------- Header ---------- */
-      .page-header {
-        text-align: center;
-        padding-bottom: 2.5rem;
-        border-bottom: 1px solid var(--border);
-        margin-bottom: 3rem;
-      }
-
-      .page-header .kicker {
-        display: inline-block;
-        font-size: 0.8rem;
-        font-weight: 600;
-        letter-spacing: 0.08em;
-        color: var(--accent);
-        background: rgba(138, 109, 59, 0.08);
-        padding: 0.35rem 0.9rem;
-        border-radius: 999px;
-        margin-bottom: 1rem;
-      }
-
-      .page-header h1 {
-        font-family: "Amiri", serif;
-        font-size: clamp(1.9rem, 4vw, 2.75rem);
-        font-weight: 700;
-        margin: 0 0 0.75rem;
-        color: var(--ink);
-        letter-spacing: -0.01em;
-      }
-
-      .page-header p {
-        color: var(--ink-soft);
-        margin: 0 auto;
-        max-width: 34rem;
+      .hero p {
         font-size: 1rem;
       }
 
-      /* ---------- Stats ---------- */
       .stats {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1rem;
-        margin-bottom: 3rem;
+        padding: 0 1rem 3rem;
+        gap: 0.75rem;
       }
 
       .stat {
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        padding: 1.25rem 1rem;
-        text-align: center;
-        box-shadow: var(--shadow);
+        padding: 0.85rem 1rem;
+        text-align: right;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
       }
 
       .stat .value {
-        font-family: "Amiri", serif;
-        font-size: 2rem;
-        font-weight: 700;
-        color: var(--accent);
-        line-height: 1;
-        display: block;
-        margin-bottom: 0.4rem;
+        font-size: 1.4rem;
+        margin: 0;
+        order: 2;
       }
 
       .stat .label {
-        font-size: 0.85rem;
-        color: var(--ink-soft);
-        font-weight: 600;
+        order: 1;
       }
 
-      /* ---------- Book cards ---------- */
-      .books {
-        display: flex;
-        flex-direction: column;
-        gap: 1.25rem;
+      .section {
+        padding: 0 1rem;
       }
+    }
+  </style>
 
-      .book {
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        box-shadow: var(--shadow);
-        overflow: hidden;
-        transition: border-color 0.2s ease;
-      }
+  <!-- ---------- Hero ---------- -->
+  <section class='hero'>
+    <span class='hero-kicker'>شرح موطأ الإمام مالك</span>
+    <h1>
+      كرسي <em>الإمام مالك</em>
+    </h1>
+    <p>
+      سلسلة دروس علمية في شرح موطأ الإمام مالك رحمه الله، مرتّبة وموثّقة حسب
+      الكتب والأبواب، مع فهرس شامل وجدول زمني يسهّل الوصول إلى كل درس.
+    </p>
 
-      .book[open] {
-        border-color: var(--accent-soft);
-      }
+    <div class='hero-cta'>
+      <a class='btn btn-primary' href='/diwan'>
+        <svg
+          width='16'
+          height='16'
+          viewBox='0 0 24 24'
+          fill='none'
+          stroke='currentColor'
+          stroke-width='2.2'
+          stroke-linecap='round'
+          stroke-linejoin='round'
+          aria-hidden='true'
+        >
+          <path d='M4 19.5A2.5 2.5 0 0 1 6.5 17H20'></path>
+          <path d='M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z'></path>
+        </svg>
+        تصفّح الفهرس
+      </a>
+      <a class='btn btn-ghost' href='/timeline'>
+        <svg
+          width='16'
+          height='16'
+          viewBox='0 0 24 24'
+          fill='none'
+          stroke='currentColor'
+          stroke-width='2.2'
+          stroke-linecap='round'
+          stroke-linejoin='round'
+          aria-hidden='true'
+        >
+          <circle cx='12' cy='12' r='10'></circle>
+          <polyline points='12 6 12 12 16 14'></polyline>
+        </svg>
+        الجدول الزمني
+      </a>
+    </div>
+  </section>
 
-      .book summary {
-        list-style: none;
-        cursor: pointer;
-        padding: 1.25rem 1.5rem;
-        display: flex;
-        align-items: center;
-        gap: 1.25rem;
-        user-select: none;
-      }
+  <!-- ---------- Stats ---------- -->
+  <section class='stats' aria-label='إحصاءات السلسلة'>
+    <div class='stat'>
+      <span class='value'>{num(totalBooks)}</span>
+      <span class='label'>كتاب</span>
+    </div>
+    <div class='stat'>
+      <span class='value'>{num(totalChapters)}</span>
+      <span class='label'>باب</span>
+    </div>
+    <div class='stat'>
+      <span class='value'>{num(totalHadiths)}</span>
+      <span class='label'>حديث</span>
+    </div>
+    <div class='stat'>
+      <span class='value'>{num(totalEpisodes)}</span>
+      <span class='label'>حلقة</span>
+    </div>
+  </section>
 
-      .book summary::-webkit-details-marker {
-        display: none;
-      }
+  <!-- ---------- Features ---------- -->
+  <section class='section'>
+    <div class='section-head'>
+      <h2>ماذا تجد هنا؟</h2>
+      <p>
+        صُمّمت هذه المنصة لتسهيل الوصول إلى دروس كرسي الإمام مالك والتنقل بينها
+        بسهولة.
+      </p>
+    </div>
 
-      .book summary:hover .book-num {
-        background: var(--accent);
-        color: #fff;
-      }
-
-      .book-num {
-        flex-shrink: 0;
-        width: 2.75rem;
-        height: 2.75rem;
-        border-radius: 50%;
-        background: rgba(138, 109, 59, 0.1);
-        color: var(--accent);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 700;
-        font-size: 1rem;
-        transition:
-          background 0.2s ease,
-          color 0.2s ease;
-      }
-
-      .book-info {
-        flex: 1;
-        min-width: 0;
-      }
-
-      .book-title {
-        font-family: "Amiri", serif;
-        font-size: 1.35rem;
-        font-weight: 700;
-        margin: 0 0 0.35rem;
-        color: var(--ink);
-        line-height: 1.3;
-      }
-
-      .book-meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.4rem 1rem;
-        font-size: 0.82rem;
-        color: var(--ink-soft);
-      }
-
-      .book-meta span {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.3rem;
-      }
-
-      .book-meta .dot {
-        width: 4px;
-        height: 4px;
-        border-radius: 50%;
-        background: var(--accent-soft);
-        display: inline-block;
-      }
-
-      .chevron {
-        flex-shrink: 0;
-        color: var(--ink-soft);
-        transition: transform 0.25s ease;
-      }
-
-      .book[open] .chevron {
-        transform: rotate(180deg);
-        color: var(--accent);
-      }
-
-      /* ---------- Chapters ---------- */
-      .chapters {
-        list-style: none;
-        margin: 0;
-        padding: 0 1.5rem 1.25rem;
-        border-top: 1px solid var(--border);
-      }
-
-      .chapter {
-        display: flex;
-        align-items: flex-start;
-        gap: 1rem;
-        padding: 0.85rem 0;
-        border-bottom: 1px dashed var(--border);
-      }
-
-      .chapter:last-child {
-        border-bottom: none;
-      }
-
-      .chapter-num {
-        flex-shrink: 0;
-        font-family: "Cairo", sans-serif;
-        font-weight: 700;
-        font-size: 0.8rem;
-        color: var(--accent);
-        background: rgba(138, 109, 59, 0.08);
-        border-radius: 6px;
-        padding: 0.2rem 0.5rem;
-        min-width: 2rem;
-        text-align: center;
-        margin-top: 0.15rem;
-      }
-
-      .chapter-info {
-        flex: 1;
-        min-width: 0;
-      }
-
-      .chapter-title {
-        font-size: 1rem;
-        font-weight: 600;
-        color: var(--ink);
-        margin: 0 0 0.15rem;
-        line-height: 1.5;
-      }
-
-      .chapter-meta {
-        font-size: 0.78rem;
-        color: var(--ink-soft);
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.35rem 0.85rem;
-      }
-
-      /* ---------- Footer ---------- */
-      .page-footer {
-        margin-top: 4rem;
-        padding-top: 2rem;
-        border-top: 1px solid var(--border);
-        text-align: center;
-        font-size: 0.85rem;
-        color: var(--ink-soft);
-      }
-
-      /* ---------- Responsive ---------- */
-      @media (max-width: 640px) {
-        .page {
-          padding: 2rem 1rem 4rem;
-        }
-
-        .stats {
-          grid-template-columns: 1fr;
-          gap: 0.75rem;
-        }
-
-        .stat {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          text-align: right;
-          padding: 0.85rem 1.1rem;
-        }
-
-        .stat .value {
-          font-size: 1.4rem;
-          margin: 0;
-          order: 2;
-        }
-
-        .stat .label {
-          order: 1;
-        }
-
-        .book summary {
-          padding: 1rem 1rem;
-          gap: 0.85rem;
-        }
-
-        .book-num {
-          width: 2.25rem;
-          height: 2.25rem;
-          font-size: 0.9rem;
-        }
-
-        .book-title {
-          font-size: 1.15rem;
-        }
-
-        .chapters {
-          padding: 0 1rem 1rem;
-        }
-      }
-
-      @media print {
-        body {
-          background: #fff;
-        }
-        .book {
-          box-shadow: none;
-          break-inside: avoid;
-        }
-        .book:not([open]) {
-          /* ensure chapters show when printing */
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <main class='page'>
-      <header class='page-header'>
-        <span class='kicker'>فهرس الدروس</span>
-        <h1>كرسي الإمام مالك</h1>
+    <div class='features'>
+      <a class='feature' href='/diwan'>
+        <span class='feature-icon' aria-hidden='true'>
+          <svg
+            width='22'
+            height='22'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='2'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+          >
+            <path d='M4 19.5A2.5 2.5 0 0 1 6.5 17H20'></path>
+            <path d='M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z'></path>
+          </svg>
+        </span>
+        <h3>فهرس الكتب والأبواب</h3>
         <p>
-          فهرس الكتب والأبواب والأحاديث في سلسلة دروس موطأ الإمام مالك، مرتّبة
-          حسب ترتيب الدروس.
+          تصفّح جميع كتب الموطأ وأبوابها مرتّبة ترتيبًا منطقيًا، مع عدد الأحاديث
+          في كل كتاب وباب، والوصول المباشر إلى الحلقة التي يبدأ فيها كل درس.
         </p>
-      </header>
+        <span class='feature-link'>
+          فتح الفهرس
+          <svg
+            width='14'
+            height='14'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='2.4'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            aria-hidden='true'
+          >
+            <line x1='19' y1='12' x2='5' y2='12'></line>
+            <polyline points='12 19 5 12 12 5'></polyline>
+          </svg>
+        </span>
+      </a>
 
-      <section class='stats' aria-label='إحصاءات'>
-        <div class='stat'>
-          <span class='value'>{totalBooks}</span>
-          <span class='label'>كتاب</span>
-        </div>
-        <div class='stat'>
-          <span class='value'>{totalChapters}</span>
-          <span class='label'>باب</span>
-        </div>
-        <div class='stat'>
-          <span class='value'>{totalHadiths}</span>
-          <span class='label'>حديث</span>
-        </div>
-      </section>
+      <a class='feature' href='/timeline'>
+        <span class='feature-icon' aria-hidden='true'>
+          <svg
+            width='22'
+            height='22'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='2'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+          >
+            <circle cx='12' cy='12' r='10'></circle>
+            <polyline points='12 6 12 12 16 14'></polyline>
+          </svg>
+        </span>
+        <h3>الجدول الزمني للدروس</h3>
+        <p>
+          عرض متسلسل لكل حلقة مع أوقاتها، يوضّح متى يبدأ كل كتاب وباب وحديث، مع
+          روابط مباشرة للتشغيل عند كل نقطة زمنية.
+        </p>
+        <span class='feature-link'>
+          عرض الجدول
+          <svg
+            width='14'
+            height='14'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='2.4'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            aria-hidden='true'
+          >
+            <line x1='19' y1='12' x2='5' y2='12'></line>
+            <polyline points='12 19 5 12 12 5'></polyline>
+          </svg>
+        </span>
+      </a>
+    </div>
+  </section>
 
-      <section class='books' aria-label='الكتب'>
-        {books.map((book, index) => (
-          <details class='book' open={index === 0}>
-            <summary>
-              <span class='book-num'>{book.book_number}</span>
-              <div class='book-info'>
-                <h2 class='book-title'>{book.title}</h2>
-                <div class='book-meta'>
-                  <span>{book.hadith_count} حديث</span>
-                  <span class='dot' />
-                  <span>{book.chapters.length} باب</span>
-                  {book.start_episode != null && (
-                    <>
-                      <span class='dot' />
-                      <span>
-                        الدروس {book.start_episode}
-                        {book.end_episode != null &&
-                          book.end_episode !== book.start_episode &&
-                          `–${book.end_episode}`}
-                      </span>
-                    </>
-                  )}
-                </div>
-              </div>
-              <svg
-                class='chevron'
-                width='20'
-                height='20'
-                viewBox='0 0 24 24'
-                fill='none'
-                stroke='currentColor'
-                stroke-width='2'
-                stroke-linecap='round'
-                stroke-linejoin='round'
-                aria-hidden='true'
-              >
-                <polyline points='6 9 12 15 18 9' />
-              </svg>
-            </summary>
+  <!-- ---------- Featured books ---------- -->
+  <section class='section'>
+    <div class='section-head'>
+      <h2>نظرة على الكتب</h2>
+      <p>بعض الكتب من الفهرس — اضغط للانتقال إلى الفهرس الكامل.</p>
+    </div>
 
-            <ol class='chapters'>
-              {book.chapters.map((chapter) => (
-                <li class='chapter'>
-                  <span class='chapter-num'>{chapter.chapter_number}</span>
-                  <div class='chapter-info'>
-                    <p class='chapter-title'>{chapter.title}</p>
-                    <div class='chapter-meta'>
-                      <span>{chapter.hadith_count} حديث</span>
-                      {chapter.start_episode != null && (
-                        <span>
-                          الدرس {chapter.start_episode}
-                          {chapter.end_episode != null &&
-                            chapter.end_episode !== chapter.start_episode &&
-                            `–${chapter.end_episode}`}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </details>
-        ))}
-      </section>
+    <div class='books-preview'>
+      {featuredBooks.map((book) => (
+        <a class='book-preview' href={`/diwan#book-${book.book_number}`}>
+          <span class='book-preview-num'>{num(book.book_number)}</span>
+          <div class='book-preview-info'>
+            <p class='book-preview-title'>{book.title}</p>
+            <div class='book-preview-meta'>
+              {num(book.hadith_count)} حديث · {num(book.chapters.length)} باب
+            </div>
+          </div>
+        </a>
+      ))}
 
-      <footer class='page-footer'>
-        <p>كرسي الإمام مالك — فهرس الدروس</p>
-      </footer>
-    </main>
-  </body>
-</html>
+      <div class='books-preview-more'>
+        <a class='btn btn-ghost' href='/diwan'>
+          عرض الفهرس الكامل ({num(totalBooks)} كتاب)
+          <svg
+            width='14'
+            height='14'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='2.4'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            aria-hidden='true'
+          >
+            <line x1='19' y1='12' x2='5' y2='12'></line>
+            <polyline points='12 19 5 12 12 5'></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

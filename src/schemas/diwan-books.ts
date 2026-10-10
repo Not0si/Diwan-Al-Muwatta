@@ -4,7 +4,8 @@ import { z } from "astro/zod"
 export const ChapterSchema = z.object({
   chapter_number: z.number(),
   title: z.string(),
-  start_episode: z.number().nullable(),
+  start_episode: z.number(),
+  start_second: z.number(),
   end_episode: z.number().nullable(),
   hadith_count: z.number(),
 })
@@ -12,7 +13,8 @@ export const ChapterSchema = z.object({
 export const DiwanBookSchema = z.object({
   book_number: z.number(),
   title: z.string(),
-  start_episode: z.number().nullable(),
+  start_episode: z.number(),
+  start_second: z.number(),
   end_episode: z.number().nullable(),
   hadith_count: z.number(),
   chapters: z.array(ChapterSchema),

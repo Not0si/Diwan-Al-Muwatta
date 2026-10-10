@@ -1,0 +1,289 @@
+---
+import "../globals.css"
+
+interface Props {
+  title: string
+  description?: string
+}
+
+const {
+  title,
+  description = "سلسلة دروس كرسي الإمام مالك — شرح موطأ الإمام مالك",
+} = Astro.props
+
+const currentPath = Astro.url.pathname
+
+const navItems = [
+  { href: "/", label: "الرئيسية" },
+  { href: "/diwan", label: "الفهرس" },
+  { href: "/timeline", label: "الجدول الزمني" },
+]
+---
+
+<html lang='ar' dir='rtl'>
+  <head>
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>{title}</title>
+    <meta name='description' content={description} />
+    <link rel='preconnect' href='https://fonts.googleapis.com' />
+    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+    <link
+      href='https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Amiri:wght@700&display=swap'
+      rel='stylesheet'
+    />
+    <style is:global>
+      :root {
+        --bg: #faf7f2;
+        --bg-card: #ffffff;
+        --ink: #1c1a17;
+        --ink-soft: #5b554c;
+        --ink-faint: #9a9288;
+        --accent: #8a6d3b;
+        --accent-soft: #c9a961;
+        --accent-tint: rgba(138, 109, 59, 0.08);
+        --border: #e8e0d3;
+        --border-soft: #f0eadf;
+        --shadow:
+          0 1px 2px rgba(28, 26, 23, 0.04),
+          0 8px 24px -12px rgba(28, 26, 23, 0.12);
+        --radius: 16px;
+        --radius-sm: 10px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family:
+          "Cairo",
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          sans-serif;
+        background: var(--bg);
+        color: var(--ink);
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      /* ---------- Site header ---------- */
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        background: rgba(250, 247, 242, 0.88);
+        backdrop-filter: saturate(180%) blur(12px);
+        -webkit-backdrop-filter: saturate(180%) blur(12px);
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.2s ease;
+      }
+
+      .site-header.is-stuck {
+        border-bottom-color: var(--border);
+      }
+
+      .site-header-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0.75rem 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        flex-shrink: 0;
+        font-family: "Amiri", serif;
+        font-weight: 700;
+        font-size: 1.15rem;
+        color: var(--ink);
+      }
+
+      .brand-mark {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 8px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+        box-shadow: 0 4px 12px -4px rgba(138, 109, 59, 0.5);
+      }
+
+      .brand-text {
+        display: inline-block;
+        line-height: 1.1;
+      }
+
+      .brand-text small {
+        display: block;
+        font-family: "Cairo", sans-serif;
+        font-size: 0.68rem;
+        font-weight: 600;
+        color: var(--ink-soft);
+        letter-spacing: 0.04em;
+      }
+
+      /* ---------- Nav ---------- */
+      .site-nav {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0.25rem;
+      }
+
+      .site-nav a {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--ink-soft);
+        padding: 0.5rem 0.9rem;
+        border-radius: 999px;
+        transition:
+          background 0.15s ease,
+          color 0.15s ease;
+        white-space: nowrap;
+      }
+
+      .site-nav a:hover {
+        color: var(--accent);
+        background: var(--accent-tint);
+      }
+
+      .site-nav a[aria-current="page"] {
+        color: var(--accent);
+        background: var(--accent-tint);
+      }
+
+      .site-nav a:focus-visible {
+        outline: 2px solid var(--accent-soft);
+        outline-offset: 2px;
+      }
+
+      /* ---------- Mobile nav ---------- */
+      @media (max-width: 640px) {
+        .site-header-inner {
+          padding: 0.6rem 1rem;
+          gap: 0.75rem;
+          flex-wrap: wrap;
+        }
+
+        .brand-text small {
+          display: none;
+        }
+
+        .site-nav {
+          width: 100%;
+          justify-content: flex-start;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+        }
+
+        .site-nav::-webkit-scrollbar {
+          display: none;
+        }
+
+        .site-nav a {
+          font-size: 0.85rem;
+          padding: 0.45rem 0.75rem;
+        }
+      }
+
+      /* ---------- Site footer ---------- */
+      .site-footer {
+        margin-top: 5rem;
+        border-top: 1px solid var(--border);
+        padding: 2rem 1.5rem;
+        text-align: center;
+        font-size: 0.85rem;
+        color: var(--ink-soft);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.001ms !important;
+          transition-duration: 0.001ms !important;
+        }
+        html {
+          scroll-behavior: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class='site-header' id='site-header'>
+      <div class='site-header-inner'>
+        <a class='brand' href='/' aria-label='الصفحة الرئيسية'>
+          <span class='brand-mark' aria-hidden='true'>
+            م
+          </span>
+          <span class='brand-text'>
+            كرسي الإمام مالك
+            <small>شرح موطأ الإمام مالك</small>
+          </span>
+        </a>
+
+        <nav class='site-nav' aria-label='التنقل الرئيسي'>
+          {navItems.map((item) => (
+            <a
+              href={item.href}
+              aria-current={
+                item.href === "/"
+                  ? currentPath === "/"
+                    ? "page"
+                    : undefined
+                  : currentPath.startsWith(item.href)
+                    ? "page"
+                    : undefined
+              }
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </header>
+
+    <slot />
+
+    <footer class='site-footer'>
+      <p>كرسي الإمام مالك — شرح موطأ الإمام مالك</p>
+    </footer>
+
+    <script>
+      const header = document.getElementById("site-header")
+      if (header) {
+        const onScroll = () => {
+          header.classList.toggle("is-stuck", window.scrollY > 8)
+        }
+        onScroll()
+        window.addEventListener("scroll", onScroll, { passive: true })
+      }
+    </script>
+  </body>
+</html>
