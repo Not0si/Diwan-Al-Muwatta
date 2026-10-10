@@ -59,7 +59,7 @@ function buildDiwanBooks(timeline: ITimelineItem[]): IDiwanBook[] {
     }
 
     // Count only actual hadith rows (skip Book / Chapter header rows)
-    const isHadithRow = item.prefix === "Hadith" || item.prefix === "None"
+    const isHadithRow = item.prefix === "Hadith"
     if (isHadithRow) book.hadith_count++
 
     // --- Chapter ---

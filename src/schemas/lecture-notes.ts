@@ -26,6 +26,7 @@ export const TimelineItemSchema = z
   .object({
     book: z.string(),
     chapter: z.string(),
+    hadith: z.string(),
     prefix: TimelinePrefixSchema,
     endTime: z.number().nullish(),
     duration: z.number().nullish(),

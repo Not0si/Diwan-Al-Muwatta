@@ -25,6 +25,7 @@ function parsePrefix(detail: string): TimelinePrefix {
 function processTimeline(rows: ILectureNote[]): ITimelineItem[] {
   let currentBook = ""
   let currentChapter = ""
+  let currentHadith = ""
 
   const items: ITimelineItem[] = rows.map((row) => {
     const prefix = parsePrefix(row.detail)
@@ -34,12 +35,15 @@ function processTimeline(rows: ILectureNote[]): ITimelineItem[] {
       currentChapter = ""
     } else if (prefix === "Chapter") {
       currentChapter = row.detail
+    } else if (prefix === "Hadith") {
+      currentHadith = row.detail
     }
 
     return {
       ...row,
       book: currentBook,
       chapter: currentChapter,
+      hadith: currentHadith,
       prefix,
       totalSeconds: row.totalSeconds,
       endTime: null,
