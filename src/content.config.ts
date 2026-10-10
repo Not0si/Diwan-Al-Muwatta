@@ -1,16 +1,16 @@
 import { defineCollection } from "astro:content"
 import { file, glob } from "astro/loaders"
-import { EpisodeSchema } from "./data/playlist/playlist"
-import { EpisodeDetailsSchema } from "./data/episodes/_schema"
+import { EpisodeSchema } from "./data/kursi_playlist/kursi_playlist"
+import { EpisodeDetailsSchema } from "./data/lecture-notes/_schema"
 
 const playlist = defineCollection({
-  loader: file("src/data/playlist/playlist.json"),
+  loader: file("src/data/kursi_playlist/kursi_playlist.json"),
   schema: EpisodeSchema,
 })
 
-const episodes = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/data/episodes" }),
+const lectureNotes = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/data/lecture-notes" }),
   schema: EpisodeDetailsSchema,
 })
 
-export const collections = { playlist, episodes }
+export const collections = { playlist, lectureNotes }

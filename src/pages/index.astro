@@ -1,36 +1,34 @@
 ---
-import { getCollection } from "astro:content";
-import { formatDuration } from "../utils/playlist";
-import type { IEpisode } from "../data/playlist/playlist";
+import { getCollection } from "astro:content"
+import { formatDuration } from "../utils/playlist"
+import type { IEpisode } from "../data/kursi_playlist/kursi_playlist"
 
-const allPlaylistEntries = await getCollection("playlist");
+const allPlaylistEntries = await getCollection("playlist")
 
-const episodes: IEpisode[] = allPlaylistEntries.map((item) => item.data);
+const episodes: IEpisode[] = allPlaylistEntries.map((item) => item.data)
 ---
 
-<html lang="ar" dir="rtl">
+<html lang='ar' dir='rtl'>
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
     <title>فهرس دروس كرسي الإمام مالك</title>
   </head>
   <body>
-    <main class="container">
+    <main class='container'>
       <header>
         <h1>فهرس دروس كرسي الإمام مالك</h1>
         <p>الشيخ سعيد الكملي</p>
       </header>
 
-      {
-        episodes.map((data) => (
-          <section class="book-section">
-            <h2 class="book-title">📚 {data.episode_number}</h2>
-            <a href={data.url} target="_blank">
-              Go
-            </a>
-          </section>
-        ))
-      }
+      {episodes.map((data) => (
+        <section class='book-section'>
+          <h2 class='book-title'>📚 {data.episode_number}</h2>
+          <a href={data.url} target='_blank'>
+            Go
+          </a>
+        </section>
+      ))}
     </main>
   </body>
 </html>

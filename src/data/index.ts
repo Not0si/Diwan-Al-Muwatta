@@ -1,9 +1,9 @@
 import { getCollection } from "astro:content"
-import { parseMarkdownTable, processTimeline } from "../data/episodes/_schema"
-import type { IEpisode } from "../data/playlist/playlist"
+import { parseMarkdownTable, processTimeline } from "./lecture-notes/_schema"
+import type { IEpisode } from "./kursi_playlist/kursi_playlist"
 
 export async function getEpisodesData() {
-  const allEpisodes = await getCollection("episodes")
+  const allEpisodes = await getCollection("lectureNotes")
 
   const parsedFiles = allEpisodes.map((entry) => ({
     id: entry.id,

@@ -1,1 +1,0 @@
-yt-dlp --flat-playlist -j "https://www.youtube.com/playlist?list=PL1N7o8_a8ugtYN75lUB6ExYHiKXVbHxAV" | jq -s 'to_entries | map({id: .value.id, episode_number: (.value.playlist_index // (.key + 1)), url: ("https://www.youtube.com/watch?v=" + .value.id), thumbnail: ("https://i.ytimg.com/vi/" + .value.id + "/hqdefault.jpg"), duration: .value.duration})' > playlist.json
