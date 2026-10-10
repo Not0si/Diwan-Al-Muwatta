@@ -1,4 +1,5 @@
 ---
+import BaseLayout from "../components/base-layout.astro"
 import { getDiwanBooks } from "../generators/diwan-books"
 import { getKursiData } from "../generators/kursi"
 import { getTimeline } from "../generators/timeline"
@@ -41,969 +42,884 @@ const booksWithUrls = books.map((book) => {
 })
 ---
 
-<html lang='ar' dir='rtl'>
-  <head>
-    <meta charset='utf-8' />
-    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-    <title>فهرس دروس كرسي الإمام مالك</title>
-    <meta
-      name='description'
-      content='فهرس الكتب والأبواب في سلسلة دروس كرسي الإمام مالك'
-    />
-    <link rel='preconnect' href='https://fonts.googleapis.com' />
-    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
-    <link
-      href='https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Amiri:wght@700&display=swap'
-      rel='stylesheet'
-    />
-    <style>
-      :root {
-        --bg: #faf7f2;
-        --bg-card: #ffffff;
-        --ink: #1c1a17;
-        --ink-soft: #5b554c;
-        --ink-faint: #9a9288;
-        --accent: #8a6d3b;
-        --accent-soft: #c9a961;
-        --accent-tint: rgba(138, 109, 59, 0.08);
-        --border: #e8e0d3;
-        --border-soft: #f0eadf;
-        --yt: #ff0000;
-        --yt-hover: #cc0000;
-        --shadow:
-          0 1px 2px rgba(28, 26, 23, 0.04),
-          0 8px 24px -12px rgba(28, 26, 23, 0.12);
-        --shadow-lg:
-          0 2px 4px rgba(28, 26, 23, 0.04),
-          0 20px 40px -20px rgba(28, 26, 23, 0.18);
-        --radius: 16px;
-        --radius-sm: 10px;
-      }
+<BaseLayout
+  title='الفهرس — كرسي الإمام مالك'
+  description='فهرس الكتب والأبواب في سلسلة دروس كرسي الإمام مالك'
+>
+  <style>
+    /* ---------- Page wrapper ---------- */
+    /* Extra top offset so deep-linked books land below the sticky toolbar */
+    :global(html) {
+      scroll-padding-top: 9rem;
+    }
 
-      * {
-        box-sizing: border-box;
-      }
+    .page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 6rem;
+    }
 
-      html {
-        scroll-behavior: smooth;
-        scroll-padding-top: 5rem;
-      }
+    /* ---------- Page header ---------- */
+    .page-header {
+      text-align: center;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
 
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-      }
+    .page-header .kicker {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      background: var(--accent-tint);
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+    }
 
-      body {
-        font-family:
-          "Cairo",
-          system-ui,
-          -apple-system,
-          "Segoe UI",
-          sans-serif;
-        background: var(--bg);
-        color: var(--ink);
-        line-height: 1.7;
-        -webkit-font-smoothing: antialiased;
-      }
+    .page-header h1 {
+      font-family: "Amiri", serif;
+      font-size: clamp(1.9rem, 4vw, 2.75rem);
+      font-weight: 700;
+      margin: 0 0 0.75rem;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
 
-      a {
-        color: inherit;
-        text-decoration: none;
+    .page-header p {
+      color: var(--ink-soft);
+      margin: 0 auto;
+      max-width: 34rem;
+      font-size: 1rem;
+    }
+
+    /* ---------- Stats ---------- */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem 1rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .stat .value {
+      font-family: "Amiri", serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      display: block;
+      margin-bottom: 0.4rem;
+      direction: ltr;
+      unicode-bidi: isolate;
+    }
+
+    .stat .label {
+      font-size: 0.85rem;
+      color: var(--ink-soft);
+      font-weight: 600;
+    }
+
+    /* ---------- Toolbar ---------- */
+    /* Sits below the site header (which is ~4.5rem tall) */
+    .toolbar {
+      position: sticky;
+      top: 4.5rem;
+      z-index: 20;
+      background: rgba(250, 247, 242, 0.88);
+      backdrop-filter: saturate(180%) blur(12px);
+      -webkit-backdrop-filter: saturate(180%) blur(12px);
+      padding: 0.75rem 0;
+      margin: 0 -0.5rem 1.5rem;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s ease;
+    }
+
+    .toolbar.is-stuck {
+      border-bottom-color: var(--border);
+    }
+
+    .toolbar-inner {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .search {
+      flex: 1;
+      position: relative;
+    }
+
+    .search svg {
+      position: absolute;
+      top: 50%;
+      inset-inline-end: 0.9rem;
+      transform: translateY(-50%);
+      color: var(--ink-faint);
+      pointer-events: none;
+    }
+
+    .search input {
+      width: 100%;
+      font: inherit;
+      font-size: 0.95rem;
+      padding: 0.7rem 2.5rem 0.7rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--bg-card);
+      color: var(--ink);
+      outline: none;
+      transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+    }
+
+    .search input:focus {
+      border-color: var(--accent-soft);
+      box-shadow: 0 0 0 3px var(--accent-tint);
+    }
+
+    .toolbar-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    .btn {
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--ink-soft);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease;
+    }
+
+    .btn:hover {
+      border-color: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--accent-soft);
+      outline-offset: 2px;
+    }
+
+    /* ---------- Book cards ---------- */
+    .books {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .book {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+      scroll-margin-top: 9rem;
+    }
+
+    .book[open] {
+      border-color: var(--accent-soft);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .book.is-hidden,
+    .chapter.is-hidden {
+      display: none;
+    }
+
+    .book summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      user-select: none;
+    }
+
+    .book summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .book summary:focus-visible {
+      outline: 2px solid var(--accent-soft);
+      outline-offset: -4px;
+      border-radius: var(--radius);
+    }
+
+    .book summary:hover .book-num {
+      background: var(--accent);
+      color: #fff;
+      transform: scale(1.05);
+    }
+
+    .book-num {
+      flex-shrink: 0;
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 50%;
+      background: var(--accent-tint);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1rem;
+      direction: ltr;
+      unicode-bidi: isolate;
+      transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .book-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .book-title {
+      font-family: "Amiri", serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin: 0 0 0.35rem;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+
+    .book-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 1rem;
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+    }
+
+    .book-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .book-meta .num {
+      direction: ltr;
+      unicode-bidi: isolate;
+    }
+
+    .book-meta .dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      display: inline-block;
+    }
+
+    .book-summary-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-shrink: 0;
+    }
+
+    /* ---------- YouTube icon button ---------- */
+    .yt-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 50%;
+      background: rgba(255, 0, 0, 0.08);
+      color: #ff0000;
+      transition:
+        background 0.15s ease,
+        color 0.15s ease,
+        transform 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .yt-btn:hover {
+      background: #ff0000;
+      color: #fff;
+      transform: scale(1.08);
+    }
+
+    .yt-btn:focus-visible {
+      outline: 2px solid #ff0000;
+      outline-offset: 2px;
+    }
+
+    .yt-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .yt-btn--lg {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+
+    .yt-btn--lg svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .chevron {
+      flex-shrink: 0;
+      color: var(--ink-soft);
+      transition:
+        transform 0.25s ease,
+        color 0.2s ease;
+    }
+
+    .book[open] .chevron {
+      transform: rotate(180deg);
+      color: var(--accent);
+    }
+
+    /* ---------- Chapters ---------- */
+    .chapters {
+      list-style: none;
+      margin: 0;
+      padding: 0 1.5rem 1.25rem;
+      border-top: 1px solid var(--border);
+      animation: slide-down 0.2s ease;
+    }
+
+    @keyframes slide-down {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .chapter {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.85rem 0.5rem;
+      border-bottom: 1px dashed var(--border);
+      transition: background 0.15s ease;
+      border-radius: 8px;
+    }
+
+    .chapter:last-child {
+      border-bottom: none;
+    }
+
+    .chapter:hover {
+      background: var(--accent-tint);
+    }
+
+    .chapter-num {
+      flex-shrink: 0;
+      font-family: "Cairo", sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: var(--accent);
+      background: var(--accent-tint);
+      border-radius: 6px;
+      padding: 0.2rem 0.5rem;
+      min-width: 2rem;
+      text-align: center;
+      margin-top: 0.15rem;
+      direction: ltr;
+      unicode-bidi: isolate;
+    }
+
+    .chapter-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .chapter-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 0 0 0.15rem;
+      line-height: 1.5;
+    }
+
+    .chapter-meta {
+      font-size: 0.78rem;
+      color: var(--ink-soft);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.85rem;
+    }
+
+    .chapter-meta .num {
+      direction: ltr;
+      unicode-bidi: isolate;
+    }
+
+    .chapter-action {
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+    }
+
+    /* ---------- Empty state ---------- */
+    .empty {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--ink-soft);
+      background: var(--bg-card);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      display: none;
+    }
+
+    .empty.is-visible {
+      display: block;
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 640px) {
+      :global(html) {
+        scroll-padding-top: 10.5rem;
       }
 
       .page {
-        max-width: 960px;
-        margin: 0 auto;
-        padding: 3rem 1.5rem 6rem;
+        padding: 2rem 1rem 4rem;
       }
 
-      /* ---------- Header ---------- */
-      .page-header {
-        text-align: center;
-        padding-bottom: 2.5rem;
-        border-bottom: 1px solid var(--border);
-        margin-bottom: 2rem;
+      .toolbar {
+        top: 6.5rem;
       }
 
-      .page-header .kicker {
-        display: inline-block;
-        font-size: 0.8rem;
-        font-weight: 600;
-        letter-spacing: 0.08em;
-        color: var(--accent);
-        background: var(--accent-tint);
-        padding: 0.35rem 0.9rem;
-        border-radius: 999px;
-        margin-bottom: 1rem;
-      }
-
-      .page-header h1 {
-        font-family: "Amiri", serif;
-        font-size: clamp(1.9rem, 4vw, 2.75rem);
-        font-weight: 700;
-        margin: 0 0 0.75rem;
-        color: var(--ink);
-        letter-spacing: -0.01em;
-      }
-
-      .page-header p {
-        color: var(--ink-soft);
-        margin: 0 auto;
-        max-width: 34rem;
-        font-size: 1rem;
-      }
-
-      /* ---------- Stats ---------- */
       .stats {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1rem;
-        margin-bottom: 2rem;
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
       }
 
       .stat {
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        padding: 1.25rem 1rem;
-        text-align: center;
-        box-shadow: var(--shadow);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text-align: right;
+        padding: 0.85rem 1.1rem;
       }
 
       .stat .value {
-        font-family: "Amiri", serif;
-        font-size: 2rem;
-        font-weight: 700;
-        color: var(--accent);
-        line-height: 1;
-        display: block;
-        margin-bottom: 0.4rem;
-        /* ensure Latin digits render normally inside RTL text */
-        direction: ltr;
-        unicode-bidi: isolate;
+        font-size: 1.4rem;
+        margin: 0;
+        order: 2;
       }
 
       .stat .label {
-        font-size: 0.85rem;
-        color: var(--ink-soft);
-        font-weight: 600;
+        order: 1;
       }
 
-      /* ---------- Toolbar ---------- */
-      .toolbar {
-        position: sticky;
-        top: 0;
-        z-index: 20;
-        background: rgba(250, 247, 242, 0.88);
-        backdrop-filter: saturate(180%) blur(12px);
-        -webkit-backdrop-filter: saturate(180%) blur(12px);
-        padding: 0.75rem 0;
-        margin: 0 -0.5rem 1.5rem;
-        border-bottom: 1px solid transparent;
-        transition: border-color 0.2s ease;
+      .toolbar-actions .btn span {
+        display: none;
       }
 
-      .toolbar.is-stuck {
-        border-bottom-color: var(--border);
-      }
-
-      .toolbar-inner {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-      }
-
-      .search {
-        flex: 1;
-        position: relative;
-      }
-
-      .search svg {
-        position: absolute;
-        top: 50%;
-        inset-inline-end: 0.9rem;
-        transform: translateY(-50%);
-        color: var(--ink-faint);
-        pointer-events: none;
-      }
-
-      .search input {
-        width: 100%;
-        font: inherit;
-        font-size: 0.95rem;
-        padding: 0.7rem 2.5rem 0.7rem 1rem;
-        border: 1px solid var(--border);
-        border-radius: var(--radius-sm);
-        background: var(--bg-card);
-        color: var(--ink);
-        outline: none;
-        transition:
-          border-color 0.15s ease,
-          box-shadow 0.15s ease;
-      }
-
-      .search input:focus {
-        border-color: var(--accent-soft);
-        box-shadow: 0 0 0 3px var(--accent-tint);
-      }
-
-      .toolbar-actions {
-        display: flex;
-        gap: 0.5rem;
-        flex-shrink: 0;
-      }
-
-      .btn {
-        font: inherit;
-        font-size: 0.82rem;
-        font-weight: 600;
-        color: var(--ink-soft);
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-sm);
-        padding: 0.6rem 0.9rem;
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        transition:
-          background 0.15s ease,
-          border-color 0.15s ease,
-          color 0.15s ease;
-      }
-
-      .btn:hover {
-        border-color: var(--accent-soft);
-        color: var(--accent);
-      }
-
-      .btn:focus-visible {
-        outline: 2px solid var(--accent-soft);
-        outline-offset: 2px;
-      }
-
-      /* ---------- Book cards ---------- */
-      .books {
-        display: flex;
-        flex-direction: column;
-        gap: 1.25rem;
+      .toolbar-actions .btn {
+        padding: 0.6rem 0.7rem;
       }
 
       .book {
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        overflow: hidden;
-        transition:
-          border-color 0.2s ease,
-          box-shadow 0.2s ease;
-        scroll-margin-top: 5rem;
-      }
-
-      .book[open] {
-        border-color: var(--accent-soft);
-        box-shadow: var(--shadow-lg);
-      }
-
-      .book.is-hidden,
-      .chapter.is-hidden {
-        display: none;
+        scroll-margin-top: 10.5rem;
       }
 
       .book summary {
-        list-style: none;
-        cursor: pointer;
-        padding: 1.25rem 1.5rem;
-        display: flex;
-        align-items: center;
-        gap: 1.25rem;
-        user-select: none;
-      }
-
-      .book summary::-webkit-details-marker {
-        display: none;
-      }
-
-      .book summary:focus-visible {
-        outline: 2px solid var(--accent-soft);
-        outline-offset: -4px;
-        border-radius: var(--radius);
-      }
-
-      .book summary:hover .book-num {
-        background: var(--accent);
-        color: #fff;
-        transform: scale(1.05);
+        padding: 1rem 1rem;
+        gap: 0.75rem;
       }
 
       .book-num {
-        flex-shrink: 0;
-        width: 2.75rem;
-        height: 2.75rem;
-        border-radius: 50%;
-        background: var(--accent-tint);
-        color: var(--accent);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 700;
-        font-size: 1rem;
-        /* force Latin digits LTR inside RTL */
-        direction: ltr;
-        unicode-bidi: isolate;
-        transition:
-          background 0.2s ease,
-          color 0.2s ease,
-          transform 0.2s ease;
-      }
-
-      .book-info {
-        flex: 1;
-        min-width: 0;
+        width: 2.25rem;
+        height: 2.25rem;
+        font-size: 0.9rem;
       }
 
       .book-title {
-        font-family: "Amiri", serif;
-        font-size: 1.35rem;
-        font-weight: 700;
-        margin: 0 0 0.35rem;
-        color: var(--ink);
-        line-height: 1.3;
+        font-size: 1.15rem;
       }
 
-      .book-meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.4rem 1rem;
-        font-size: 0.82rem;
-        color: var(--ink-soft);
+      .chapters {
+        padding: 0 1rem 1rem;
       }
 
-      .book-meta span {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.3rem;
-      }
-
-      .book-meta .num {
-        direction: ltr;
-        unicode-bidi: isolate;
-      }
-
-      .book-meta .dot {
-        width: 4px;
-        height: 4px;
-        border-radius: 50%;
-        background: var(--accent-soft);
-        display: inline-block;
-      }
-
-      .book-summary-actions {
-        display: flex;
-        align-items: center;
-        gap: 0.6rem;
-        flex-shrink: 0;
-      }
-
-      /* ---------- YouTube icon button ---------- */
       .yt-btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 2.25rem;
-        height: 2.25rem;
-        border-radius: 50%;
-        background: rgba(255, 0, 0, 0.08);
-        color: var(--yt);
-        transition:
-          background 0.15s ease,
-          color 0.15s ease,
-          transform 0.15s ease;
-        flex-shrink: 0;
-      }
-
-      .yt-btn:hover {
-        background: var(--yt);
-        color: #fff;
-        transform: scale(1.08);
-      }
-
-      .yt-btn:focus-visible {
-        outline: 2px solid var(--yt);
-        outline-offset: 2px;
+        width: 2rem;
+        height: 2rem;
       }
 
       .yt-btn svg {
-        width: 16px;
-        height: 16px;
+        width: 14px;
+        height: 14px;
       }
+    }
 
-      .yt-btn--lg {
-        width: 2.5rem;
-        height: 2.5rem;
-      }
-
-      .yt-btn--lg svg {
-        width: 18px;
-        height: 18px;
-      }
-
-      .chevron {
-        flex-shrink: 0;
-        color: var(--ink-soft);
-        transition:
-          transform 0.25s ease,
-          color 0.2s ease;
-      }
-
-      .book[open] .chevron {
-        transform: rotate(180deg);
-        color: var(--accent);
-      }
-
-      /* ---------- Chapters ---------- */
+    @media (prefers-reduced-motion: reduce) {
       .chapters {
-        list-style: none;
-        margin: 0;
-        padding: 0 1.5rem 1.25rem;
-        border-top: 1px solid var(--border);
-        animation: slide-down 0.2s ease;
+        animation: none;
       }
+    }
 
-      @keyframes slide-down {
-        from {
-          opacity: 0;
-          transform: translateY(-4px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .chapter {
-        display: flex;
-        align-items: flex-start;
-        gap: 0.75rem;
-        padding: 0.85rem 0.5rem;
-        border-bottom: 1px dashed var(--border);
-        transition: background 0.15s ease;
-        border-radius: 8px;
-      }
-
-      .chapter:last-child {
-        border-bottom: none;
-      }
-
-      .chapter:hover {
-        background: var(--accent-tint);
-      }
-
-      .chapter-num {
-        flex-shrink: 0;
-        font-family: "Cairo", sans-serif;
-        font-weight: 700;
-        font-size: 0.8rem;
-        color: var(--accent);
-        background: var(--accent-tint);
-        border-radius: 6px;
-        padding: 0.2rem 0.5rem;
-        min-width: 2rem;
-        text-align: center;
-        margin-top: 0.15rem;
-        direction: ltr;
-        unicode-bidi: isolate;
-      }
-
-      .chapter-info {
-        flex: 1;
-        min-width: 0;
-      }
-
-      .chapter-title {
-        font-size: 1rem;
-        font-weight: 600;
-        color: var(--ink);
-        margin: 0 0 0.15rem;
-        line-height: 1.5;
-      }
-
-      .chapter-meta {
-        font-size: 0.78rem;
-        color: var(--ink-soft);
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.35rem 0.85rem;
-      }
-
-      .chapter-meta .num {
-        direction: ltr;
-        unicode-bidi: isolate;
-      }
-
-      .chapter-action {
-        flex-shrink: 0;
-        margin-top: 0.15rem;
-      }
-
-      /* ---------- Empty state ---------- */
-      .empty {
-        text-align: center;
-        padding: 3rem 1rem;
-        color: var(--ink-soft);
-        background: var(--bg-card);
-        border: 1px dashed var(--border);
-        border-radius: var(--radius);
+    @media print {
+      .toolbar {
         display: none;
       }
-
-      .empty.is-visible {
+      .book {
+        box-shadow: none;
+        break-inside: avoid;
+        border-color: #ddd;
+      }
+      .book summary {
+        padding: 0.75rem 1rem;
+      }
+      .book:not([open]) .chapters {
         display: block;
       }
+    }
+  </style>
 
-      /* ---------- Footer ---------- */
-      .page-footer {
-        margin-top: 4rem;
-        padding-top: 2rem;
-        border-top: 1px solid var(--border);
-        text-align: center;
-        font-size: 0.85rem;
-        color: var(--ink-soft);
-      }
+  <main class='page'>
+    <header class='page-header'>
+      <span class='kicker'>فهرس الدروس</span>
+      <h1>كرسي الإمام مالك</h1>
+      <p>
+        فهرس الكتب والأبواب والأحاديث في سلسلة دروس موطأ الإمام مالك، مرتّبة حسب
+        ترتيب الدروس.
+      </p>
+    </header>
 
-      /* ---------- Responsive ---------- */
-      @media (max-width: 640px) {
-        .page {
-          padding: 2rem 1rem 4rem;
-        }
+    <section class='stats' aria-label='إحصاءات'>
+      <div class='stat'>
+        <span class='value'>{num(totalBooks)}</span>
+        <span class='label'>كتاب</span>
+      </div>
+      <div class='stat'>
+        <span class='value'>{num(totalChapters)}</span>
+        <span class='label'>باب</span>
+      </div>
+      <div class='stat'>
+        <span class='value'>{num(totalHadiths)}</span>
+        <span class='label'>حديث</span>
+      </div>
+    </section>
 
-        .stats {
-          grid-template-columns: 1fr;
-          gap: 0.75rem;
-        }
+    <div class='toolbar' id='toolbar'>
+      <div class='toolbar-inner'>
+        <label class='search'>
+          <input
+            id='search'
+            type='search'
+            placeholder='ابحث في الكتب والأبواب…'
+            autocomplete='off'
+            aria-label='بحث'
+          />
+          <svg
+            width='16'
+            height='16'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='2'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            aria-hidden='true'
+          >
+            <circle cx='11' cy='11' r='8'></circle>
+            <line x1='21' y1='21' x2='16.65' y2='16.65'></line>
+          </svg>
+        </label>
 
-        .stat {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          text-align: right;
-          padding: 0.85rem 1.1rem;
-        }
-
-        .stat .value {
-          font-size: 1.4rem;
-          margin: 0;
-          order: 2;
-        }
-
-        .stat .label {
-          order: 1;
-        }
-
-        .toolbar-actions .btn span {
-          display: none;
-        }
-
-        .toolbar-actions .btn {
-          padding: 0.6rem 0.7rem;
-        }
-
-        .book summary {
-          padding: 1rem 1rem;
-          gap: 0.75rem;
-        }
-
-        .book-num {
-          width: 2.25rem;
-          height: 2.25rem;
-          font-size: 0.9rem;
-        }
-
-        .book-title {
-          font-size: 1.15rem;
-        }
-
-        .chapters {
-          padding: 0 1rem 1rem;
-        }
-
-        .yt-btn {
-          width: 2rem;
-          height: 2rem;
-        }
-
-        .yt-btn svg {
-          width: 14px;
-          height: 14px;
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        *,
-        *::before,
-        *::after {
-          animation-duration: 0.001ms !important;
-          transition-duration: 0.001ms !important;
-        }
-        html {
-          scroll-behavior: auto;
-        }
-      }
-
-      @media print {
-        body {
-          background: #fff;
-        }
-        .toolbar {
-          display: none;
-        }
-        .book {
-          box-shadow: none;
-          break-inside: avoid;
-          border-color: #ddd;
-        }
-        .book summary {
-          padding: 0.75rem 1rem;
-        }
-        .book:not([open]) .chapters {
-          display: block;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <main class='page'>
-      <header class='page-header'>
-        <span class='kicker'>فهرس الدروس</span>
-        <h1>كرسي الإمام مالك</h1>
-        <p>
-          فهرس الكتب والأبواب والأحاديث في سلسلة دروس موطأ الإمام مالك، مرتّبة
-          حسب ترتيب الدروس.
-        </p>
-      </header>
-
-      <section class='stats' aria-label='إحصاءات'>
-        <div class='stat'>
-          <span class='value'>{num(totalBooks)}</span>
-          <span class='label'>كتاب</span>
-        </div>
-        <div class='stat'>
-          <span class='value'>{num(totalChapters)}</span>
-          <span class='label'>باب</span>
-        </div>
-        <div class='stat'>
-          <span class='value'>{num(totalHadiths)}</span>
-          <span class='label'>حديث</span>
-        </div>
-      </section>
-
-      <div class='toolbar' id='toolbar'>
-        <div class='toolbar-inner'>
-          <label class='search'>
-            <input
-              id='search'
-              type='search'
-              placeholder='ابحث في الكتب والأبواب…'
-              autocomplete='off'
-              aria-label='بحث'
-            />
+        <div class='toolbar-actions'>
+          <button class='btn' id='expand-all' type='button'>
             <svg
-              width='16'
-              height='16'
+              width='14'
+              height='14'
               viewBox='0 0 24 24'
               fill='none'
               stroke='currentColor'
-              stroke-width='2'
+              stroke-width='2.2'
               stroke-linecap='round'
               stroke-linejoin='round'
               aria-hidden='true'
             >
-              <circle cx='11' cy='11' r='8'></circle>
-              <line x1='21' y1='21' x2='16.65' y2='16.65'></line>
+              <polyline points='7 13 12 18 17 13'></polyline>
+              <polyline points='7 6 12 11 17 6'></polyline>
             </svg>
-          </label>
-
-          <div class='toolbar-actions'>
-            <button class='btn' id='expand-all' type='button'>
-              <svg
-                width='14'
-                height='14'
-                viewBox='0 0 24 24'
-                fill='none'
-                stroke='currentColor'
-                stroke-width='2.2'
-                stroke-linecap='round'
-                stroke-linejoin='round'
-                aria-hidden='true'
-              >
-                <polyline points='7 13 12 18 17 13'></polyline>
-                <polyline points='7 6 12 11 17 6'></polyline>
-              </svg>
-              <span>فتح الكل</span>
-            </button>
-            <button class='btn' id='collapse-all' type='button'>
-              <svg
-                width='14'
-                height='14'
-                viewBox='0 0 24 24'
-                fill='none'
-                stroke='currentColor'
-                stroke-width='2.2'
-                stroke-linecap='round'
-                stroke-linejoin='round'
-                aria-hidden='true'
-              >
-                <polyline points='7 11 12 6 17 11'></polyline>
-                <polyline points='7 18 12 13 17 18'></polyline>
-              </svg>
-              <span>غلق الكل</span>
-            </button>
-          </div>
+            <span>فتح الكل</span>
+          </button>
+          <button class='btn' id='collapse-all' type='button'>
+            <svg
+              width='14'
+              height='14'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              stroke-width='2.2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              aria-hidden='true'
+            >
+              <polyline points='7 11 12 6 17 11'></polyline>
+              <polyline points='7 18 12 13 17 18'></polyline>
+            </svg>
+            <span>غلق الكل</span>
+          </button>
         </div>
       </div>
+    </div>
 
-      <section class='books' id='books' aria-label='الكتب'>
-        {booksWithUrls.map((book, index) => (
-          <details
-            class='book'
-            id={`book-${book.book_number}`}
-            data-search={book.title}
-            open={index === 0}
-          >
-            <summary>
-              <span class='book-num'>{num(book.book_number)}</span>
-              <div class='book-info'>
-                <h2 class='book-title'>{book.title}</h2>
-                <div class='book-meta'>
-                  <span>
-                    <span class='num'>{num(book.hadith_count)}</span> حديث
-                  </span>
-                  <span class='dot' />
-                  <span>
-                    <span class='num'>{num(book.chapters.length)}</span> باب
-                  </span>
-                  {book.start_episode != null && (
-                    <>
-                      <span class='dot' />
+    <section class='books' id='books' aria-label='الكتب'>
+      {booksWithUrls.map((book, index) => (
+        <details
+          class='book'
+          id={`book-${book.book_number}`}
+          data-search={book.title}
+          open={index === 0}
+        >
+          <summary>
+            <span class='book-num'>{num(book.book_number)}</span>
+            <div class='book-info'>
+              <h2 class='book-title'>{book.title}</h2>
+              <div class='book-meta'>
+                <span>
+                  <span class='num'>{num(book.hadith_count)}</span> حديث
+                </span>
+                <span class='dot' />
+                <span>
+                  <span class='num'>{num(book.chapters.length)}</span> باب
+                </span>
+                {book.start_episode != null && (
+                  <>
+                    <span class='dot' />
+                    <span>
+                      الدروس <span class='num'>{num(book.start_episode)}</span>
+                      {book.end_episode != null &&
+                        book.end_episode !== book.start_episode && (
+                          <>
+                            –<span class='num'>{num(book.end_episode)}</span>
+                          </>
+                        )}
+                    </span>
+                  </>
+                )}
+              </div>
+            </div>
+
+            <div class='book-summary-actions'>
+              {book.url && (
+                <a
+                  class='yt-btn yt-btn--lg'
+                  href={book.url}
+                  target='_blank'
+                  rel='noopener'
+                  aria-label={`تشغيل ${book.title} على يوتيوب`}
+                  title='تشغيل على يوتيوب'
+                >
+                  <svg
+                    viewBox='0 0 24 24'
+                    fill='currentColor'
+                    aria-hidden='true'
+                  >
+                    <path d='M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z' />
+                  </svg>
+                </a>
+              )}
+
+              <svg
+                class='chevron'
+                width='20'
+                height='20'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                aria-hidden='true'
+              >
+                <polyline points='6 9 12 15 18 9' />
+              </svg>
+            </div>
+          </summary>
+
+          <ol class='chapters'>
+            {book.chapters.map((chapter) => (
+              <li
+                class='chapter'
+                data-search={chapter.title}
+                data-book={book.title}
+              >
+                <span class='chapter-num'>{num(chapter.chapter_number)}</span>
+                <div class='chapter-info'>
+                  <p class='chapter-title'>{chapter.title}</p>
+                  <div class='chapter-meta'>
+                    <span>
+                      <span class='num'>{num(chapter.hadith_count)}</span> حديث
+                    </span>
+                    {chapter.start_episode != null && (
                       <span>
-                        الدروس{" "}
-                        <span class='num'>{num(book.start_episode)}</span>
-                        {book.end_episode != null &&
-                          book.end_episode !== book.start_episode && (
+                        الدرس{" "}
+                        <span class='num'>{num(chapter.start_episode)}</span>
+                        {chapter.end_episode != null &&
+                          chapter.end_episode !== chapter.start_episode && (
                             <>
-                              –<span class='num'>{num(book.end_episode)}</span>
+                              –
+                              <span class='num'>
+                                {num(chapter.end_episode)}
+                              </span>
                             </>
                           )}
                       </span>
-                    </>
-                  )}
-                </div>
-              </div>
-
-              <div class='book-summary-actions'>
-                {book.url && (
-                  <a
-                    class='yt-btn yt-btn--lg'
-                    href={book.url}
-                    target='_blank'
-                    rel='noopener'
-                    aria-label={`تشغيل ${book.title} على يوتيوب`}
-                    title='تشغيل على يوتيوب'
-                  >
-                    <svg
-                      viewBox='0 0 24 24'
-                      fill='currentColor'
-                      aria-hidden='true'
-                    >
-                      <path d='M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z' />
-                    </svg>
-                  </a>
-                )}
-
-                <svg
-                  class='chevron'
-                  width='20'
-                  height='20'
-                  viewBox='0 0 24 24'
-                  fill='none'
-                  stroke='currentColor'
-                  stroke-width='2'
-                  stroke-linecap='round'
-                  stroke-linejoin='round'
-                  aria-hidden='true'
-                >
-                  <polyline points='6 9 12 15 18 9' />
-                </svg>
-              </div>
-            </summary>
-
-            <ol class='chapters'>
-              {book.chapters.map((chapter) => (
-                <li
-                  class='chapter'
-                  data-search={chapter.title}
-                  data-book={book.title}
-                >
-                  <span class='chapter-num'>{num(chapter.chapter_number)}</span>
-                  <div class='chapter-info'>
-                    <p class='chapter-title'>{chapter.title}</p>
-                    <div class='chapter-meta'>
-                      <span>
-                        <span class='num'>{num(chapter.hadith_count)}</span>{" "}
-                        حديث
-                      </span>
-                      {chapter.start_episode != null && (
-                        <span>
-                          الدرس{" "}
-                          <span class='num'>{num(chapter.start_episode)}</span>
-                          {chapter.end_episode != null &&
-                            chapter.end_episode !== chapter.start_episode && (
-                              <>
-                                –
-                                <span class='num'>
-                                  {num(chapter.end_episode)}
-                                </span>
-                              </>
-                            )}
-                        </span>
-                      )}
-                    </div>
+                    )}
                   </div>
+                </div>
 
-                  {chapter.url && (
-                    <div class='chapter-action'>
-                      <a
-                        class='yt-btn'
-                        href={chapter.url}
-                        target='_blank'
-                        rel='noopener'
-                        aria-label={`تشغيل ${chapter.title} على يوتيوب`}
-                        title='تشغيل على يوتيوب'
+                {chapter.url && (
+                  <div class='chapter-action'>
+                    <a
+                      class='yt-btn'
+                      href={chapter.url}
+                      target='_blank'
+                      rel='noopener'
+                      aria-label={`تشغيل ${chapter.title} على يوتيوب`}
+                      title='تشغيل على يوتيوب'
+                    >
+                      <svg
+                        viewBox='0 0 24 24'
+                        fill='currentColor'
+                        aria-hidden='true'
                       >
-                        <svg
-                          viewBox='0 0 24 24'
-                          fill='currentColor'
-                          aria-hidden='true'
-                        >
-                          <path d='M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z' />
-                        </svg>
-                      </a>
-                    </div>
-                  )}
-                </li>
-              ))}
-            </ol>
-          </details>
-        ))}
+                        <path d='M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z' />
+                      </svg>
+                    </a>
+                  </div>
+                )}
+              </li>
+            ))}
+          </ol>
+        </details>
+      ))}
 
-        <div class='empty' id='empty'>
-          لا توجد نتائج مطابقة لبحثك.
-        </div>
-      </section>
+      <div class='empty' id='empty'>
+        لا توجد نتائج مطابقة لبحثك.
+      </div>
+    </section>
+  </main>
 
-      <footer class='page-footer'>
-        <p>كرسي الإمام مالك — فهرس الدروس</p>
-      </footer>
-    </main>
-
-    <script>
-      // ---------- Sticky toolbar border on scroll ----------
-      const toolbar = document.getElementById("toolbar")
-      if (toolbar) {
-        const onScroll = () => {
-          toolbar.classList.toggle("is-stuck", window.scrollY > 8)
-        }
-        onScroll()
-        window.addEventListener("scroll", onScroll, { passive: true })
+  <script>
+    // ---------- Sticky toolbar border on scroll ----------
+    const toolbar = document.getElementById("toolbar")
+    if (toolbar) {
+      const onScroll = () => {
+        toolbar.classList.toggle("is-stuck", window.scrollY > 8)
       }
+      onScroll()
+      window.addEventListener("scroll", onScroll, { passive: true })
+    }
 
-      // ---------- Search / filter ----------
-      const searchInput = document.getElementById(
-        "search"
-      ) as HTMLInputElement | null
-      const emptyEl = document.getElementById("empty")
-      const bookEls = Array.from(
-        document.querySelectorAll<HTMLDetailsElement>("details.book")
-      )
+    // ---------- Search / filter ----------
+    const searchInput = document.getElementById(
+      "search"
+    ) as HTMLInputElement | null
+    const emptyEl = document.getElementById("empty")
+    const bookEls = Array.from(
+      document.querySelectorAll<HTMLDetailsElement>("details.book")
+    )
 
-      const normalize = (s: string) =>
-        s
-          .trim()
-          .toLowerCase()
-          .replace(/[\u064B-\u065F\u0670]/g, "")
-          .replace(/[إأآا]/g, "ا")
-          .replace(/[ىي]/g, "ي")
-          .replace(/ة/g, "ه")
+    const normalize = (s: string) =>
+      s
+        .trim()
+        .toLowerCase()
+        .replace(/[\u064B-\u065F\u0670]/g, "")
+        .replace(/[إأآا]/g, "ا")
+        .replace(/[ىي]/g, "ي")
+        .replace(/ة/g, "ه")
 
-      const applyFilter = (raw: string) => {
-        const q = normalize(raw)
-        let visibleBooks = 0
+    const applyFilter = (raw: string) => {
+      const q = normalize(raw)
+      let visibleBooks = 0
 
-        for (const book of bookEls) {
-          const bookTitle = normalize(book.dataset.search ?? "")
-          const chapterEls = Array.from(
-            book.querySelectorAll<HTMLLIElement>("li.chapter")
-          )
+      for (const book of bookEls) {
+        const bookTitle = normalize(book.dataset.search ?? "")
+        const chapterEls = Array.from(
+          book.querySelectorAll<HTMLLIElement>("li.chapter")
+        )
 
-          const bookMatches = q === "" || bookTitle.includes(q)
+        const bookMatches = q === "" || bookTitle.includes(q)
 
-          let visibleChapters = 0
-          for (const chapter of chapterEls) {
-            const chapterTitle = normalize(chapter.dataset.search ?? "")
-            const chapterMatches = q === "" || chapterTitle.includes(q)
-            const show = bookMatches || chapterMatches
-            chapter.classList.toggle("is-hidden", !show)
-            if (show) visibleChapters++
-          }
-
-          const showBook = q === "" || bookMatches || visibleChapters > 0
-          book.classList.toggle("is-hidden", !showBook)
-          if (showBook) visibleBooks++
-
-          if (q !== "" && showBook) {
-            book.open = true
-          }
+        let visibleChapters = 0
+        for (const chapter of chapterEls) {
+          const chapterTitle = normalize(chapter.dataset.search ?? "")
+          const chapterMatches = q === "" || chapterTitle.includes(q)
+          const show = bookMatches || chapterMatches
+          chapter.classList.toggle("is-hidden", !show)
+          if (show) visibleChapters++
         }
 
-        emptyEl?.classList.toggle("is-visible", visibleBooks === 0)
-      }
+        const showBook = q === "" || bookMatches || visibleChapters > 0
+        book.classList.toggle("is-hidden", !showBook)
+        if (showBook) visibleBooks++
 
-      searchInput?.addEventListener("input", (e) => {
-        applyFilter((e.target as HTMLInputElement).value)
-      })
-
-      // ---------- Expand / collapse all ----------
-      document.getElementById("expand-all")?.addEventListener("click", () => {
-        bookEls.forEach((b) => (b.open = true))
-      })
-
-      document.getElementById("collapse-all")?.addEventListener("click", () => {
-        bookEls.forEach((b) => (b.open = false))
-      })
-
-      // ---------- Deep-link: open book from hash ----------
-      const openFromHash = () => {
-        const id = window.location.hash.slice(1)
-        if (!id) return
-        const el = document.getElementById(id)
-        if (el instanceof HTMLDetailsElement) {
-          el.open = true
-          el.scrollIntoView({ behavior: "smooth", block: "start" })
+        if (q !== "" && showBook) {
+          book.open = true
         }
       }
-      openFromHash()
-      window.addEventListener("hashchange", openFromHash)
-    </script>
-    <script>
-      // This runs on the client and attaches to all matching elements
-      document.querySelectorAll(".book-link").forEach((link) => {
-        link.addEventListener("click", (e) => {
-          e.stopPropagation()
-        })
-      })
-    </script>
-  </body>
-</html>
+
+      emptyEl?.classList.toggle("is-visible", visibleBooks === 0)
+    }
+
+    searchInput?.addEventListener("input", (e) => {
+      applyFilter((e.target as HTMLInputElement).value)
+    })
+
+    // ---------- Expand / collapse all ----------
+    document.getElementById("expand-all")?.addEventListener("click", () => {
+      bookEls.forEach((b) => (b.open = true))
+    })
+
+    document.getElementById("collapse-all")?.addEventListener("click", () => {
+      bookEls.forEach((b) => (b.open = false))
+    })
+
+    // ---------- Deep-link: open book from hash ----------
+    const openFromHash = () => {
+      const id = window.location.hash.slice(1)
+      if (!id) return
+      const el = document.getElementById(id)
+      if (el instanceof HTMLDetailsElement) {
+        el.open = true
+        el.scrollIntoView({ behavior: "smooth", block: "start" })
+      }
+    }
+    openFromHash()
+    window.addEventListener("hashchange", openFromHash)
+  </script>
+</BaseLayout>
