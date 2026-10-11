@@ -474,9 +474,6 @@ const episodesWithUrls = episodes.map(({ episode, items }) => {
                   </div>
 
                   <div class='row-actions'>
-                    {item.duration != null && (
-                      <span class='duration'>+{formatTime(item.duration)}</span>
-                    )}
                     {item.url && (
                       <a
                         class='yt-btn'

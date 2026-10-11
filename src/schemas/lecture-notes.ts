@@ -28,8 +28,6 @@ export const TimelineItemSchema = z
     chapter: z.string(),
     hadith: z.string(),
     prefix: TimelinePrefixSchema,
-    endTime: z.number().nullish(),
-    duration: z.number().nullish(),
   })
   .and(LectureNoteItemSchema)
 

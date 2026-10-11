@@ -46,21 +46,8 @@ function processTimeline(rows: ILectureNote[]): ITimelineItem[] {
       hadith: currentHadith,
       prefix,
       totalSeconds: row.totalSeconds,
-      endTime: null,
-      duration: null,
     }
   })
-
-  for (let i = 0; i < items.length; i++) {
-    const current = items[i]
-    for (let j = i + 1; j < items.length; j++) {
-      if (items[j].episode === current.episode) {
-        current.endTime = items[j].totalSeconds
-        current.duration = Math.max(0, current.endTime - current.totalSeconds)
-        break
-      }
-    }
-  }
 
   return items
 }
